@@ -1,6 +1,14 @@
 {
   "projects": [
     {
+      "title": "PopRunner — Full-Stack On-Demand Real Estate Service Marketplace",
+      "description": "Architected and developed a dual-sided marketplace connecting real estate agents with service providers ('Runners'). The platform automates the logistics of property listing prep, including sign placement, lockbox installation, and photography. Engineered a complex job state machine with role-based views for Realtors (booking/management) and Runners (discovery/execution). Integrated Google Maps for proximity-based job discovery and Google Cloud Storage for authenticated 'proof of completion' photo uploads. Implemented Stripe Connect to manage the flow of funds, handling multi-party transactions and automated payouts to service providers while retaining platform fees.",
+      "role": "Lead Architect & Full-Stack Engineer",
+      "tools": ["Next.js", "TypeScript", "Python", "Django", "Django REST Framework", "Stripe Connect", "Google Cloud Storage", "Cloud SQL", "Google Maps API", "Docker", "Cloud Run", "Tailwind CSS", "JWT Auth"],
+      "outcome": "Delivered a scalable marketplace prototype with automated payment orchestration, cloud-native media handling, and real-time status tracking—reducing listing preparation overhead for agents.",
+      "link": ""
+    },
+    {
       "title": "Wazuh Home Lab SIEM — Full-Stack Security Monitoring & Detection Platform",
       "description": "Deployed a production-grade SIEM/XDR platform on Ubuntu 22.04 using Wazuh v4.14.5, standing up the full Wazuh stack (Manager, Indexer, Dashboard) and enrolling multiple monitored endpoints including a Fedora Linux workstation. Configured File Integrity Monitoring (FIM) across critical system paths (/etc, /bin, /sbin, /boot), Security Configuration Assessment (SCA), vulnerability detection with hourly CVE feed updates, rootcheck for rootkit and trojan detection, and active response — automating firewall-drop blocks on SSH brute-force triggers (rule 5712, 30-minute ban). Built a custom Python Discord integration that parses Wazuh alert JSON and fires formatted real-time notifications (severity, source host, rule description) to a private security channel. Extended the ruleset with custom detection rules: a Level 12 canary file trap using Linux auditd to detect any unauthorized access to AWS credentials, and application-layer monitoring rules for a live trading agent's error and auth failure events. Integrated GCP Pub/Sub to ingest cloud logs from the gorillac-site GCP project directly into the SIEM pipeline.",
       "role": "Security Engineer / Homelab Architect",
@@ -92,7 +100,7 @@
     },
     {
       "category": "Application & Backend",
-      "items": ["REST APIs", "JWT / OAuth2", ".NET", "Python", "FastAPI", "SQL Server", "MySQL", "Bash / Shell Scripting"]
+      "items": ["REST APIs", "JWT / OAuth2", ".NET", "Python", "Django", "Django REST Framework", "FastAPI", "SQL Server", "MySQL", "Bash / Shell Scripting"]
     },
     {
       "category": "AI & Automation",
@@ -105,6 +113,10 @@
     {
       "category": "Networking",
       "items": ["Firewall Policy", "VLAN Segmentation", "Load Balancing", "CDN", "Zero Trust Networking"]
+    },
+    {
+      "category": "Frontend & Web",
+      "items": ["Next.js", "React", "TypeScript", "Tailwind CSS"]
     }
   ]
 }
