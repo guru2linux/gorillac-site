@@ -9,6 +9,22 @@
       "link": ""
     },
     {
+      "title": "Jerusalem Lodge No. 100 — Member Portal & Lodge Management Platform",
+      "description": "Designed and built a full-stack member portal for a Prince Hall Masonic lodge. The platform provides role-based access for members, officers, a secretary, and a treasurer — each with a unique landing page and dashboard after login. Features include JWT-authenticated sessions, member record management, a meeting agenda creator, a trestleboard (event calendar), treasurer financial reporting, and a secretary portal for lodge administration. Deployed on a self-hosted LXC container behind a Cloudflare Tunnel with nginx serving the static Vite/React frontend and reverse-proxying API requests to the Node.js backend. CI/CD pipeline via GitHub Actions builds the frontend on a cloud runner and deploys to the server via a self-hosted runner.",
+      "role": "Sole Architect & Full-Stack Engineer",
+      "tools": ["Node.js", "Express", "MySQL", "JWT", "React", "Vite", "nginx", "Cloudflare Tunnel", "GitHub Actions", "systemd", "Proxmox LXC"],
+      "outcome": "Replaced manual paper-based lodge administration with a secure, role-aware web portal — giving officers, the secretary, and the treasurer dedicated tools while keeping member data self-hosted on private infrastructure.",
+      "link": ""
+    },
+    {
+      "title": "Autonomous Trading Agent — ML-Driven Intraday Bot with Schwab Integration",
+      "description": "Built a production intraday trading bot that runs continuously against a live Schwab brokerage account. The signal stack combines an XGBoost classifier (trained on technical indicators and market microstructure features) with a FinRL/PPO reinforcement learning agent for position sizing. Engineered a full market session lifecycle: pre-market data prep, real-time quote ingestion, per-symbol signal evaluation, order execution with risk controls, and after-hours model retraining via an automated task scheduler. Implemented a market phase engine (overnight, pre-market, regular, after-hours) to gate Schwab authentication and trading actions by session — skipping broker auth entirely when the market is closed. A Discord bot provides live health checks, trade alerts, and daily P&L summaries. A loop watchdog thread detects and alerts on hangs. All trades and model performance metrics are persisted to MySQL.",
+      "role": "Sole Architect & Engineer",
+      "tools": ["Python", "XGBoost", "FinRL", "PPO", "Schwab API", "MySQL", "SQLAlchemy", "Discord API", "Pandas", "NumPy", "scikit-learn", "systemd", "Bash"],
+      "outcome": "End-to-end autonomous trading pipeline — from market scanning and ML signal generation through order execution, risk management, and post-session model retraining — running live against a real brokerage account with real-time Discord alerting.",
+      "link": ""
+    },
+    {
       "title": "Wazuh Home Lab SIEM — Full-Stack Security Monitoring & Detection Platform",
       "description": "Deployed a production-grade SIEM/XDR platform on Ubuntu 22.04 using Wazuh v4.14.5, standing up the full Wazuh stack (Manager, Indexer, Dashboard) and enrolling multiple monitored endpoints including a Fedora Linux workstation. Configured File Integrity Monitoring (FIM) across critical system paths (/etc, /bin, /sbin, /boot), Security Configuration Assessment (SCA), vulnerability detection with hourly CVE feed updates, rootcheck for rootkit and trojan detection, and active response — automating firewall-drop blocks on SSH brute-force triggers (rule 5712, 30-minute ban). Built a custom Python Discord integration that parses Wazuh alert JSON and fires formatted real-time notifications (severity, source host, rule description) to a private security channel. Extended the ruleset with custom detection rules: a Level 12 canary file trap using Linux auditd to detect any unauthorized access to AWS credentials, and application-layer monitoring rules for a live trading agent's error and auth failure events. Integrated GCP Pub/Sub to ingest cloud logs from the gorillac-site GCP project directly into the SIEM pipeline.",
       "role": "Security Engineer / Homelab Architect",
@@ -22,7 +38,7 @@
       "role": "Sole Architect & Engineer",
       "tools": ["Python", "Dash", "Plotly", "Pandas", "SQLAlchemy", "MySQL", "Gmail API", "Google OAuth2", "scikit-learn", "Jupyter"],
       "outcome": "End-to-end pipeline from inbox to insight — Gmail emails are auto-parsed and status-classified, CSV bulk imports are deduplicated on ingest, and the live dashboard surfaces response rates, rejection trends, and weekly cadence at a glance.",
-      "link": "job-application-tracker-demo.html"
+      "link": "job-application-tracker-demo"
     },
     {
       "title": "Job Copilot — AI-Powered Job Search, Scoring Platform",
@@ -30,11 +46,11 @@
       "role": "Sole Architect & Engineer",
       "tools": ["Python", "FastAPI", "Playwright", "SQLAlchemy", "MySQL", "Alembic", "Claude API (Anthropic)", "Docker", "Jinja2", "Markdown"],
       "outcome": "AI-driven pipeline that searches, scores, and lists high-fit jobs. Claude handles custom form questions, while the platform maintains a live list of scored opportunities with audit trails for every submission.",
-      "link": "job-copilot-demo.html"
+      "link": "job-copilot-demo"
     },
     {
       "title": "Cloud-Hosted Portfolio Site — IaC on GCP (gorillac.net)",
-      "description": "Designed and deployed a production-grade personal portfolio site on GCP with all infrastructure defined as code in Terraform. Resources provisioned include: a GCS bucket with versioning and static website hosting, a Cloud CDN-backed backend bucket for edge caching, a globally reserved static IP, path-based URL map routing (serving static assets from GCS while routing /api/contact to a Cloud Run backend service), a Google-managed SSL certificate covering gorillac.net and www.gorillac.net, HTTPS and HTTP target proxies, and global forwarding rules on ports 80 and 443 with automatic HTTP-to-HTTPS redirect. All assets are uploaded and managed as Terraform resources with correct MIME types and IAM public read access.",
+      "description": "Designed and deployed a production-grade personal portfolio site on GCP with all infrastructure defined as code in Terraform. Resources provisioned include: a GCS bucket with versioning and static website hosting, a Cloud CDN-backed backend bucket for edge caching, a globally reserved static IP, path-based URL map routing (serving static assets from GCS while routing /api/contact to a Cloud Run backend service), a Google-managed SSL certificate covering gorillac.net and www.gorillac.net, HTTPS and HTTP target proxies, and global forwarding rules on ports 80 and 443 with automatic HTTP-to-HTTPS redirect. All assets are uploaded and managed as Terraform resources with correct MIME types and IAM public read access. Bucket objects are served at clean extensionless URLs (/resume, /portfolio, /contact) via Content-Type-aware object naming.",
       "role": "Sole Architect & Engineer",
       "tools": ["Terraform", "GCP", "Cloud Storage", "Cloud CDN", "Cloud Load Balancing", "Managed SSL", "Cloud Run", "IAM", "Global Forwarding Rules"],
       "outcome": "Fully reproducible, zero-click infrastructure — a single `terraform apply` provisions and wires the entire stack. Live at gorillac.net with sub-second global load times via CDN edge caching.",
@@ -100,15 +116,15 @@
     },
     {
       "category": "Application & Backend",
-      "items": ["REST APIs", "JWT / OAuth2", ".NET", "Python", "Django", "Django REST Framework", "FastAPI", "SQL Server", "MySQL", "Bash / Shell Scripting"]
+      "items": ["REST APIs", "JWT / OAuth2", ".NET", "Python", "Django", "Django REST Framework", "FastAPI", "Node.js", "Express", "SQL Server", "MySQL", "Bash / Shell Scripting"]
     },
     {
       "category": "AI & Automation",
-      "items": ["Claude API (Anthropic)", "Prompt Engineering", "Playwright", "Browser Automation", "LLM-Driven Workflows"]
+      "items": ["Claude API (Anthropic)", "XGBoost", "FinRL / PPO", "Prompt Engineering", "Playwright", "Browser Automation", "LLM-Driven Workflows"]
     },
     {
       "category": "Containers & Deployment",
-      "items": ["Docker", "Docker Compose", "Cloud Run"]
+      "items": ["Docker", "Docker Compose", "Cloud Run", "Proxmox", "Cloudflare Tunnel", "nginx", "systemd"]
     },
     {
       "category": "Networking",
@@ -116,7 +132,7 @@
     },
     {
       "category": "Frontend & Web",
-      "items": ["Next.js", "React", "TypeScript", "Tailwind CSS"]
+      "items": ["Next.js", "React", "Vite", "TypeScript", "Tailwind CSS"]
     }
   ]
 }
