@@ -496,7 +496,7 @@ resource "google_compute_backend_service" "api" {
 # ──────────────────────────────────────────────────────────────
 
 resource "google_storage_bucket_object" "contact_page" {
-  name         = "contact.html"
+  name         = "contact"
   bucket       = google_storage_bucket.website.name
   source       = "${path.module}/website/contact.html"
   content_type = "text/html"

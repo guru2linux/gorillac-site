@@ -25,7 +25,7 @@ resource "google_storage_bucket_object" "index" {
 
 # Upload the resume.html file to the bucket
 resource "google_storage_bucket_object" "resume" {
-  name         = "resume.html"
+  name         = "resume"
   bucket       = google_storage_bucket.website.name
   source       = "${path.module}/website/resume.html"
   content_type = "text/html"
@@ -33,7 +33,7 @@ resource "google_storage_bucket_object" "resume" {
 
 # Upload the portfolio page
 resource "google_storage_bucket_object" "portfolio" {
-  name         = "portfolio.html"
+  name         = "portfolio"
   bucket       = google_storage_bucket.website.name
   source       = "${path.module}/website/portfolio.html"
   content_type = "text/html"
@@ -49,7 +49,7 @@ resource "google_storage_bucket_object" "projects_data" {
 
 # Upload the Job Copilot demo page
 resource "google_storage_bucket_object" "job_copilot_demo" {
-  name         = "job-copilot-demo.html"
+  name         = "job-copilot-demo"
   bucket       = google_storage_bucket.website.name
   source       = "${path.module}/website/job-copilot-demo.html"
   content_type = "text/html"
@@ -57,7 +57,7 @@ resource "google_storage_bucket_object" "job_copilot_demo" {
 
 # Upload the Job Application Tracker demo page
 resource "google_storage_bucket_object" "job_application_tracker_demo" {
-  name         = "job-application-tracker-demo.html"
+  name         = "job-application-tracker-demo"
   bucket       = google_storage_bucket.website.name
   source       = "${path.module}/website/job-application-tracker-demo.html"
   content_type = "text/html"
