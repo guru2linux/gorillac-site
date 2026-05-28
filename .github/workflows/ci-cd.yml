@@ -13,6 +13,10 @@ concurrency:
 env:
   TF_VERSION: "~1.15"
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   terraform-plan:
     name: Terraform Plan
@@ -23,7 +27,8 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          workload_identity_provider: projects/223974183956/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+          service_account: terraform-ci@gorillac-site.iam.gserviceaccount.com
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -56,7 +61,8 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          workload_identity_provider: projects/223974183956/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+          service_account: terraform-ci@gorillac-site.iam.gserviceaccount.com
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
