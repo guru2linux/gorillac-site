@@ -5,7 +5,7 @@ Terraform configuration that deploys the full GCP infrastructure for [gorillac.n
 ## What this provisions
 
 ### Static website hosting
-- **GCS bucket** (`gorillac-site-bucket`) serving HTML pages: `index.html`, `resume.html`, `portfolio.html`, `contact.html`, and `job-copilot-demo.html`
+- **GCS bucket** (`gorillac-site-bucket`) serving extensionless HTML pages: `index.html`, `resume`, `portfolio`, `contact`, and `job-copilot-demo`
 - **Cloud CDN** via a backend bucket for fast global delivery
 - **Global HTTPS load balancer** with a Google-managed SSL certificate for `gorillac.net` and `www.gorillac.net`
 - **HTTP → HTTPS redirect** (port 80 permanently redirects to 443)
@@ -14,18 +14,15 @@ Terraform configuration that deploys the full GCP infrastructure for [gorillac.n
 ### Contact form backend
 - **Cloud Function v2** (Python 3.11, `gorillac-contact`) handles `POST /api/contact` requests
 - Sends email notifications via **SendGrid**
-- Persists submissions to **Cloud SQL MySQL 8.0** over a private VPC connection
 - **Cloud Armor** rate-limiting policy: 10 requests/minute per IP (returns 429 on excess)
 - Routed through the load balancer via a **serverless NEG**
 
 ### Networking & security
-- Custom **VPC** with private subnets for Cloud SQL (no public IP on the database)
-- **VPC Access Connector** so the Cloud Function can reach private IP ranges
-- **Secret Manager** stores the SendGrid API key and auto-generated database password
 - Dedicated service accounts with least-privilege IAM for the function runtime and Cloud Build
+- **Secret Manager** stores the SendGrid API key
 
 ### Observability & cost
-- **Billing budget** alerts at 50%, 90%, and 100% of a $25/month threshold
+- **Billing budget** alerts at 50%, 90%, and 100% of a $10/month threshold
 
 ## Project structure
 
