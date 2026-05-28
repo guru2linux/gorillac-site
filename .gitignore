@@ -37,5 +37,5 @@ tfplan
 .terraformrc
 terraform.rc
 
-# Lock file
-.terraform.lock.hcl
+# Credentials
+*.json
