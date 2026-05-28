@@ -49,6 +49,14 @@
       "link": "job-copilot-demo"
     },
     {
+      "title": "Insurance Lead Automation Pipeline — Serverless AWS Orchestration",
+      "description": "Engineered a full serverless insurance lead-to-outreach automation pipeline on AWS. An EventBridge-triggered Lambda ingests leads and enforces TCPA/FTSA compliance (calling windows, DNC scrub, litigator scrub) before enqueuing into SQS. A Step Functions state machine orchestrates the full outreach workflow: AI quality scoring via Amazon Bedrock (Claude), outbound calling via Amazon Connect, SMS via Pinpoint, and transactional email via SES — with built-in retry logic, opt-out recording, and structured failure logging. Six Lambda functions share a single packaged deployment ZIP built via a shell script. Infrastructure is fully defined in multi-file Terraform with an S3 remote state backend using native locking (Terraform 1.10+ `use_lockfile`). A three-stage GitHub Actions CI/CD pipeline runs Python unit tests, Terraform fmt/validate/plan on every PR, and automated `terraform apply` plus rolling Lambda code updates on merge to main.",
+      "role": "Sole Architect & Engineer",
+      "tools": ["Python", "AWS Lambda", "Step Functions", "DynamoDB", "SQS", "EventBridge", "Amazon Bedrock (Claude)", "Amazon Connect", "Pinpoint", "SES", "API Gateway", "S3", "Terraform", "GitHub Actions", "pytest"],
+      "outcome": "Production-ready serverless lead pipeline with TCPA/FTSA compliance enforcement at the ingestion layer, AI-scored prioritization, multi-channel outreach orchestration, and fully automated IaC deployment — git push to updated Lambda code in under 5 minutes.",
+      "link": ""
+    },
+    {
       "title": "Cloud-Hosted Portfolio Site — IaC on GCP (gorillac.net)",
       "description": "Designed and deployed a production-grade personal portfolio site on GCP with all infrastructure defined as code in Terraform. Resources provisioned include: a GCS bucket with versioning and static website hosting, a Cloud CDN-backed backend bucket for edge caching, a globally reserved static IP, path-based URL map routing (serving static assets from GCS while routing /api/contact to a Cloud Run backend service), a Google-managed SSL certificate covering gorillac.net and www.gorillac.net, HTTPS and HTTP target proxies, and global forwarding rules on ports 80 and 443 with automatic HTTP-to-HTTPS redirect. All assets are uploaded and managed as Terraform resources with correct MIME types and IAM public read access. Bucket objects are served at clean extensionless URLs (/resume, /portfolio, /contact) via Content-Type-aware object naming.",
       "role": "Sole Architect & Engineer",
