@@ -17,7 +17,7 @@ resource "google_iam_workload_identity_pool_provider" "github" {
     "attribute.ref"        = "assertion.ref"
   }
 
-  attribute_condition = "assertion.repository == \"guru2linux/terraformProjects\""
+  attribute_condition = "assertion.repository == \"GorillacDevelopment/gorillac-site\""
 
   oidc {
     issuer_uri = "https://token.actions.githubusercontent.com"
@@ -27,5 +27,5 @@ resource "google_iam_workload_identity_pool_provider" "github" {
 resource "google_service_account_iam_member" "github_wif" {
   service_account_id = "projects/gorillac-site/serviceAccounts/terraform-ci@gorillac-site.iam.gserviceaccount.com"
   role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github.name}/attribute.repository/guru2linux/terraformProjects"
+  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github.name}/attribute.repository/GorillacDevelopment/gorillac-site"
 }
