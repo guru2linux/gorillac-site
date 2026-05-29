@@ -39,3 +39,4 @@ terraform.rc
 
 # Credentials
 *.json
+.directory
