@@ -231,21 +231,15 @@ resource "google_cloudfunctions2_function" "contact" {
     service_account_email = google_service_account.contact_fn.email
 
     environment_variables = {
-      CONTACT_EMAIL    = "leedulcio@gorillac.net"
-      PLATFORM_API_URL = "https://api.gorillac.net"
+      CONTACT_EMAIL        = "leedulcio@gorillac.net"
+      PLATFORM_API_URL     = "https://api.gorillac.net"
+      PLATFORM_INBOUND_KEY = "8d41fc349efd74641daf80825cddb719e13ca660caf7f240807977c9d5c9cd76"
     }
 
     secret_environment_variables {
       key        = "SENDGRID_API_KEY"
       project_id = "gorillac-site"
       secret     = google_secret_manager_secret.sendgrid_key.secret_id
-      version    = "latest"
-    }
-
-    secret_environment_variables {
-      key        = "PLATFORM_INBOUND_KEY"
-      project_id = "gorillac-site"
-      secret     = "gorillac-platform-inbound-lead-key"
       version    = "latest"
     }
   }
