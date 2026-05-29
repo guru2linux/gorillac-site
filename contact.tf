@@ -186,7 +186,7 @@ resource "google_secret_manager_secret_iam_member" "fn_sendgrid" {
 }
 
 resource "google_secret_manager_secret_iam_member" "fn_inbound_lead_key" {
-  project   = "gorillac-secrets"
+  project   = "gorillac-site"
   secret_id = "gorillac-platform-inbound-lead-key"
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${google_service_account.contact_fn.email}"
@@ -244,7 +244,7 @@ resource "google_cloudfunctions2_function" "contact" {
 
     secret_environment_variables {
       key        = "PLATFORM_INBOUND_KEY"
-      project_id = "gorillac-secrets"
+      project_id = "gorillac-site"
       secret     = "gorillac-platform-inbound-lead-key"
       version    = "latest"
     }
