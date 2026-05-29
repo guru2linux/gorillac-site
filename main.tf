@@ -47,6 +47,27 @@ resource "google_storage_bucket_object" "projects_data" {
   content_type = "application/json"
 }
 
+resource "google_storage_bucket_object" "services" {
+  name         = "services"
+  bucket       = google_storage_bucket.website.name
+  source       = "${path.module}/website/services.html"
+  content_type = "text/html"
+}
+
+resource "google_storage_bucket_object" "about" {
+  name         = "about"
+  bucket       = google_storage_bucket.website.name
+  source       = "${path.module}/website/about.html"
+  content_type = "text/html"
+}
+
+resource "google_storage_bucket_object" "contact" {
+  name         = "contact"
+  bucket       = google_storage_bucket.website.name
+  source       = "${path.module}/website/contact.html"
+  content_type = "text/html"
+}
+
 # Upload the Job Copilot demo page
 resource "google_storage_bucket_object" "job_copilot_demo" {
   name         = "job-copilot-demo"
