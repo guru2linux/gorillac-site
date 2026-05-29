@@ -185,6 +185,13 @@ resource "google_secret_manager_secret_iam_member" "fn_sendgrid" {
   member    = "serviceAccount:${google_service_account.contact_fn.email}"
 }
 
+resource "google_secret_manager_secret_iam_member" "fn_inbound_lead_key" {
+  project   = "gorillac-secrets"
+  secret_id = "gorillac-platform-inbound-lead-key"
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.contact_fn.email}"
+}
+
 # ──────────────────────────────────────────────────────────────
 # Cloud Function v2 — email-only, no VPC/SQL
 # ──────────────────────────────────────────────────────────────
@@ -224,13 +231,21 @@ resource "google_cloudfunctions2_function" "contact" {
     service_account_email = google_service_account.contact_fn.email
 
     environment_variables = {
-      CONTACT_EMAIL = "leedulcio@gorillac.net"
+      CONTACT_EMAIL    = "leedulcio@gorillac.net"
+      PLATFORM_API_URL = "https://api.gorillac.net"
     }
 
     secret_environment_variables {
       key        = "SENDGRID_API_KEY"
       project_id = "gorillac-site"
       secret     = google_secret_manager_secret.sendgrid_key.secret_id
+      version    = "latest"
+    }
+
+    secret_environment_variables {
+      key        = "PLATFORM_INBOUND_KEY"
+      project_id = "gorillac-secrets"
+      secret     = "gorillac-platform-inbound-lead-key"
       version    = "latest"
     }
   }
