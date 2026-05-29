@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lee Dulcio — Contact</title>
+  <title>Get Started — GorillaC</title>
+  <meta name="description" content="Tell us about your project. We'll respond within one business day.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -12,8 +13,11 @@
       --bg: #050505;
       --surface: #0e0e0e;
       --accent: #00ff88;
-      --accent-dim: rgba(0, 255, 136, 0.08);
-      --accent-border: rgba(0, 255, 136, 0.2);
+      --accent-dim: rgba(0,255,136,0.08);
+      --accent-border: rgba(0,255,136,0.2);
+      --text: #bbb;
+      --text-dim: #444;
+      --text-mid: #666;
       --border: #1a1a1a;
     }
 
@@ -22,7 +26,7 @@
     body {
       background: var(--bg);
       font-family: 'JetBrains Mono', monospace;
-      color: #bbb;
+      color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -74,10 +78,20 @@
       border: 1px solid var(--border);
       padding: 50px 56px;
       width: 100%;
-      max-width: 520px;
+      max-width: 560px;
       box-shadow: 0 8px 40px rgba(0,0,0,0.6);
       position: relative;
       z-index: 1;
+    }
+
+    .card-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-align: center;
+      opacity: 0.5;
+      margin-bottom: 28px;
     }
 
     h1 {
@@ -90,27 +104,22 @@
       margin-bottom: 6px;
     }
 
+    .subtitle {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #333;
+      letter-spacing: 1px;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
     .divider {
       width: 48px;
       height: 2px;
       background: var(--accent);
       box-shadow: 0 0 8px rgba(0,255,136,0.4);
       border-radius: 2px;
-      margin: 14px auto 10px;
-    }
-
-    .guest-count {
-      text-align: center;
-      font-size: 0.72rem;
-      color: #333;
-      letter-spacing: 1px;
-      margin-bottom: 36px;
-      min-height: 18px;
-    }
-
-    .guest-count span {
-      color: var(--accent);
-      font-weight: 500;
+      margin: 12px auto 20px;
     }
 
     label {
@@ -125,7 +134,7 @@
       margin-top: 20px;
     }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       background: #080808;
       border: 1px solid var(--border);
@@ -139,37 +148,43 @@
       resize: vertical;
     }
 
-    input:focus, textarea:focus {
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23444'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    select option { background: #0e0e0e; }
+
+    input:focus, textarea:focus, select:focus {
       border-color: var(--accent-border);
     }
 
-    textarea { min-height: 120px; }
+    textarea { min-height: 100px; }
 
     button {
       margin-top: 28px;
       width: 100%;
       padding: 12px;
-      background: transparent;
-      border: 1px solid var(--accent-border);
+      background: var(--accent);
+      border: none;
       border-radius: 3px;
-      color: var(--accent);
-      font-size: 0.72rem;
+      color: #050505;
+      font-size: 0.75rem;
       font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
       letter-spacing: 3px;
       text-transform: uppercase;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      transition: opacity 0.2s;
     }
 
-    button:hover:not(:disabled) {
-      background: var(--accent-dim);
-      border-color: var(--accent);
-    }
+    button:hover:not(:disabled) { opacity: 0.88; }
 
-    button:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
+    button:disabled { opacity: 0.3; cursor: not-allowed; }
 
     .feedback {
       margin-top: 18px;
@@ -177,10 +192,23 @@
       text-align: center;
       min-height: 20px;
       letter-spacing: 0.5px;
+      line-height: 1.6;
     }
 
     .feedback.success { color: #00ff88; }
     .feedback.error   { color: #e05a5a; }
+
+    .response-note {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #2a2a2a;
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 36px 24px; }
+    }
   </style>
 </head>
 <body>
@@ -190,55 +218,53 @@
   </div>
 
   <div class="card">
-    <h1>CONTACT</h1>
+    <div class="card-logo">GorillaC</div>
+    <h1>LET'S TALK</h1>
     <div class="divider"></div>
-    <div class="guest-count" id="guest-count">&nbsp;</div>
+    <p class="subtitle">Tell us about your business and what you need.<br>We respond within one business day.</p>
 
     <form id="contact-form" novalidate>
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" placeholder="Your name" required />
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" placeholder="John Smith" required />
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="your@email.com" required />
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="john@yourbusiness.com" required />
 
-      <label for="message">Message</label>
-      <textarea id="message" name="message" placeholder="How can I help?" required></textarea>
+      <label for="company">Business Name</label>
+      <input type="text" id="company" name="company" placeholder="Acme LLC (optional)" />
+
+      <label for="service">What Do You Need?</label>
+      <select id="service" name="service">
+        <option value="">— Select a service —</option>
+        <option value="website">New Website</option>
+        <option value="hosting">Managed Hosting</option>
+        <option value="security">Cybersecurity</option>
+        <option value="ai">AI Automation</option>
+        <option value="workspace">Google Workspace</option>
+        <option value="managed">Managed IT</option>
+        <option value="other">Not sure / Other</option>
+      </select>
+
+      <label for="message">Tell Us More</label>
+      <textarea id="message" name="message" placeholder="What's the current situation and what would success look like?" required></textarea>
 
       <button type="submit" id="submit-btn">Send Message</button>
     </form>
 
     <div class="feedback" id="feedback"></div>
+    <p class="response-note">We'll respond within 1 business day · No spam · No pressure</p>
   </div>
 
   <script>
     const API = '/api/contact';
 
-    function parseJSON(text) {
-      if (!text || !text.trim()) throw new Error('Empty response from server.');
-      return JSON.parse(text);
-    }
-
-    function setCount(n) {
-      const el = document.getElementById('guest-count');
-      if (n > 0) {
-        el.innerHTML = `<span>${n}</span> ${n === 1 ? 'person has' : 'people have'} reached out`;
-      } else {
-        el.textContent = 'Be the first to reach out';
-      }
-    }
-
-    // Load guest count on page load — silent on failure
-    fetch(API)
-      .then(r => r.text())
-      .then(text => { setCount(parseJSON(text).count || 0); })
-      .catch(() => { setCount(0); });
-
-    // Form submit
     document.getElementById('contact-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
       const name    = document.getElementById('name').value.trim();
       const email   = document.getElementById('email').value.trim();
+      const company = document.getElementById('company').value.trim();
+      const service = document.getElementById('service').value;
       const message = document.getElementById('message').value.trim();
       const btn     = document.getElementById('submit-btn');
       const fb      = document.getElementById('feedback');
@@ -248,9 +274,15 @@
 
       if (!name || !email || !message) {
         fb.className = 'feedback error';
-        fb.textContent = 'Please fill out all fields.';
+        fb.textContent = 'Please fill out your name, email, and message.';
         return;
       }
+
+      const fullMessage = [
+        company ? `Business: ${company}` : '',
+        service ? `Service Interest: ${service}` : '',
+        `\n${message}`
+      ].filter(Boolean).join('\n');
 
       btn.disabled = true;
       btn.textContent = 'Sending…';
@@ -258,18 +290,16 @@
       fetch(API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, email, message: fullMessage }),
       })
-        .then(r => r.text().then(text => ({ status: r.status, text })))
-        .then(({ status, text }) => {
-          const data = parseJSON(text);
-          if (data.success) {
+        .then(r => r.json().then(data => ({ ok: r.ok, data })))
+        .then(({ ok, data }) => {
+          if (ok && data.success) {
             fb.className = 'feedback success';
-            fb.textContent = "Message sent — I'll be in touch.";
+            fb.textContent = "Got it — we'll be in touch within one business day.";
             document.getElementById('contact-form').reset();
-            setCount(data.count || 1);
           } else {
-            throw new Error(data.error || `Server error (${status})`);
+            throw new Error(data.error || 'Something went wrong. Please try again.');
           }
         })
         .catch(err => {
