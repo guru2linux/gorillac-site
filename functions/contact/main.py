@@ -53,18 +53,18 @@ def send_welcome_email(name, email):
     sg.send(mail)
 
 
-def post_to_platform(name, email, message):
+def post_to_platform(name, email, message, service=None):
     platform_url = os.environ.get("PLATFORM_API_URL", "")
     api_key = os.environ.get("PLATFORM_INBOUND_KEY", "")
     if not platform_url or not api_key:
         print("PLATFORM_API_URL or PLATFORM_INBOUND_KEY not set — skipping CRM post")
         return
 
-    payload = json.dumps({
-        "full_name": name,
-        "email": email,
-        "message": message,
-    }).encode("utf-8")
+    body = {"full_name": name, "email": email, "message": message}
+    if service:
+        body["service"] = service
+
+    payload = json.dumps(body).encode("utf-8")
 
     req = urllib.request.Request(
         f"{platform_url.rstrip('/')}/api/leads/inbound",
@@ -105,6 +105,7 @@ def contact_handler(request):
     name    = str(data.get("name", "")).strip()
     email   = str(data.get("email", "")).strip()
     message = str(data.get("message", "")).strip()
+    service = str(data.get("service", "")).strip() or None
 
     if not (name and email and message):
         return (json.dumps({"error": "All fields are required."}), 400, headers)
@@ -122,7 +123,7 @@ def contact_handler(request):
         print(f"Owner email error: {exc}")
         return (json.dumps({"error": "Failed to send message. Please try again."}), 500, headers)
 
-    post_to_platform(name, email, message)
+    post_to_platform(name, email, message, service=service)
 
     try:
         send_welcome_email(name, email)
