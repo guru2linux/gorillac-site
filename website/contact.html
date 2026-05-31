@@ -206,6 +206,26 @@
       letter-spacing: 0.1em;
     }
 
+    .contact-info {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .contact-info a {
+      color: #444;
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+
+    .contact-info a:hover { color: var(--accent); }
+
     @media (max-width: 600px) {
       .card { padding: 36px 24px; }
     }
@@ -253,6 +273,11 @@
 
     <div class="feedback" id="feedback"></div>
     <p class="response-note">We'll respond within 1 business day · No spam · No pressure</p>
+
+    <div class="contact-info">
+      <a href="tel:+18134219980">(813) 421-9980</a>
+      <a href="mailto:leedulcio@gorillac.net">leedulcio@gorillac.net</a>
+    </div>
   </div>
 
   <script>
