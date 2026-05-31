@@ -40,3 +40,6 @@ terraform.rc
 # Credentials
 *.json
 .directory
+
+# Gemini CLI instructions
+GEMINI.md
