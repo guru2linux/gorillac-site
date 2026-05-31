@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GorillaC — Secure Websites. Cloud Solutions. AI Automation.</title>
-  <meta name="description" content="GorillaC helps Tampa Bay small businesses get enterprise-grade websites, cloud hosting, and security — without enterprise complexity.">
+  <title>Lee Dulcio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -12,540 +11,101 @@
   <style>
     :root {
       --bg: #050505;
-      --surface: #0e0e0e;
       --accent: #00ff88;
-      --accent-glow: rgba(0, 255, 136, 0.12);
+      --accent-glow: rgba(0, 255, 136, 0.18);
       --accent-border: rgba(0, 255, 136, 0.22);
-      --text: #bbb;
       --text-dim: #444;
-      --text-mid: #666;
-      --border: #1a1a1a;
+      --text-mid: #888;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: var(--bg);
       font-family: 'JetBrains Mono', monospace;
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
+      overflow: hidden;
       position: relative;
+      cursor: crosshair;
     }
 
+    /* Subtle dot-grid background */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: radial-gradient(circle, rgba(0,255,136,0.06) 1px, transparent 1px);
+      background-image:
+        radial-gradient(circle, rgba(0,255,136,0.07) 1px, transparent 1px);
       background-size: 36px 36px;
       pointer-events: none;
       z-index: 0;
     }
 
+    /* Vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 70% at center, transparent 30%, #050505 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Film grain overlay */
     .grain {
       position: fixed;
       inset: -50%;
       width: 200%;
       height: 200%;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: 0.03;
+      opacity: 0.035;
       pointer-events: none;
       z-index: 900;
       animation: grainShift 0.12s steps(1) infinite;
     }
+
     @keyframes grainShift {
-      0%   { transform: translate(0,0); }
-      25%  { transform: translate(-2%,1%); }
-      50%  { transform: translate(1%,-2%); }
-      75%  { transform: translate(2%,2%); }
-      100% { transform: translate(-1%,-1%); }
+      0%   { transform: translate(0, 0); }
+      25%  { transform: translate(-2%, 1%); }
+      50%  { transform: translate(1%, -2%); }
+      75%  { transform: translate(2%, 2%); }
+      100% { transform: translate(-1%, -1%); }
     }
 
-    /* NAV */
-    nav {
+    /* Corner brackets */
+    .corner {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 48px;
-      background: rgba(5,5,5,0.85);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #0d0d0d;
-    }
-
-    .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      text-decoration: none;
-      text-shadow: 0 0 12px rgba(0,255,136,0.4);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--text-mid);
-      text-decoration: none;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: lowercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--accent); }
-
-    .nav-cta {
-      padding: 8px 20px;
-      border: 1px solid var(--accent-border);
-      border-radius: 2px;
-      color: var(--accent) !important;
-      transition: background 0.2s !important;
-    }
-
-    .nav-cta:hover { background: var(--accent-glow) !important; }
-
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 40px 80px;
-      position: relative;
+      width: 28px;
+      height: 28px;
       z-index: 1;
-    }
-
-    .hero-eyebrow {
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      color: var(--accent);
-      text-transform: uppercase;
-      opacity: 0.7;
-      margin-bottom: 20px;
-      animation: fadeUp 0.8s ease forwards;
-    }
-
-    .hero-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(5rem, 16vw, 12rem);
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      line-height: 1;
-      text-shadow:
-        0 0 20px rgba(0,255,136,0.5),
-        0 0 60px rgba(0,255,136,0.2),
-        0 0 120px rgba(0,255,136,0.08);
-      animation: fadeUp 0.9s ease forwards 0.1s;
       opacity: 0;
+      animation: fadeIn 0.4s ease forwards 1.6s;
     }
+    .corner-tl { top: 22px; left: 22px; border-top: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+    .corner-tr { top: 22px; right: 22px; border-top: 1px solid var(--accent); border-right: 1px solid var(--accent); }
+    .corner-bl { bottom: 22px; left: 22px; border-bottom: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+    .corner-br { bottom: 22px; right: 22px; border-bottom: 1px solid var(--accent); border-right: 1px solid var(--accent); }
 
-    .hero-tagline {
-      font-size: clamp(0.7rem, 1.8vw, 0.85rem);
-      letter-spacing: 0.15em;
-      color: var(--text-mid);
-      text-transform: uppercase;
-      margin-top: 16px;
-      animation: fadeUp 0.8s ease forwards 0.3s;
-      opacity: 0;
-    }
-
-    .hero-sub {
-      max-width: 540px;
-      font-size: 0.82rem;
-      line-height: 1.8;
-      color: #555;
-      margin-top: 28px;
-      animation: fadeUp 0.8s ease forwards 0.45s;
-      opacity: 0;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      margin-top: 40px;
-      flex-wrap: wrap;
-      justify-content: center;
-      animation: fadeUp 0.8s ease forwards 0.6s;
-      opacity: 0;
-    }
-
-    .btn-primary {
-      padding: 13px 32px;
-      background: var(--accent);
-      color: #050505;
-      border: none;
-      border-radius: 2px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      transition: opacity 0.2s, box-shadow 0.2s;
-    }
-
-    .btn-primary:hover {
-      opacity: 0.88;
-      box-shadow: 0 0 20px rgba(0,255,136,0.3);
-    }
-
-    .btn-ghost {
-      padding: 13px 32px;
-      background: transparent;
-      color: var(--text-mid);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .btn-ghost:hover {
-      color: var(--accent);
-      border-color: var(--accent-border);
-    }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 32px;
+    /* Status dot */
+    .status {
+      position: fixed;
+      bottom: 28px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-dim);
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      animation: fadeIn 1s ease forwards 1.2s;
-      opacity: 0;
-    }
-
-    .hero-scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, transparent, var(--accent));
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
-
-    /* SERVICES SECTION */
-    section {
-      position: relative;
-      z-index: 1;
-      padding: 100px 48px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.3em;
-      color: var(--accent);
-      text-transform: uppercase;
-      opacity: 0.6;
-      margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
-      color: #e0e0e0;
-      letter-spacing: 0.08em;
-      line-height: 1.05;
-      margin-bottom: 48px;
-    }
-
-    .section-divider {
-      width: 100%;
-      height: 1px;
-      background: var(--border);
-      margin: 0 0 80px;
-    }
-
-    /* SERVICE CARDS */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    .service-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 36px 32px;
-      transition: border-color 0.25s, background 0.25s, transform 0.25s;
-    }
-
-    .service-card:hover {
-      border-color: var(--accent-border);
-      background: #111;
-      transform: translateY(-3px);
-    }
-
-    .service-icon {
-      font-size: 1.4rem;
-      color: var(--accent);
-      margin-bottom: 18px;
-      opacity: 0.8;
-    }
-
-    .service-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem;
-      letter-spacing: 0.1em;
-      color: #e0e0e0;
-      margin-bottom: 12px;
-    }
-
-    .service-desc {
-      font-size: 0.82rem;
-      line-height: 1.75;
-      color: #666;
-      margin-bottom: 20px;
-    }
-
-    .service-link {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      text-decoration: none;
-      opacity: 0.6;
-      transition: opacity 0.2s;
-    }
-
-    .service-link:hover { opacity: 1; }
-
-    /* PROOF STRIP */
-    .proof-strip {
-      position: relative;
-      z-index: 1;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 60px 48px;
-    }
-
-    .proof-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-      text-align: center;
-    }
-
-    .proof-stat-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.8rem;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      line-height: 1;
-    }
-
-    .proof-stat-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      margin-top: 8px;
-    }
-
-    /* FOUNDER STRIP */
-    .founder-strip {
-      position: relative;
-      z-index: 1;
-      padding: 100px 48px;
-    }
-
-    .founder-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .founder-photo-wrap {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      padding: 5px;
-      border: 1px solid var(--accent-border);
-      position: relative;
-    }
-
-    .founder-photo-wrap::before {
-      content: '';
-      position: absolute;
-      inset: -5px;
-      border-radius: 50%;
-      border: 1px dashed var(--accent);
-      opacity: 0.25;
-      animation: spin 12s linear infinite;
-    }
-
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-
-    .founder-photo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-      filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(250%) contrast(1.1) brightness(0.8);
-      transition: filter 0.5s;
-    }
-
-    .founder-photo-wrap:hover .founder-photo {
-      filter: none;
-    }
-
-    .founder-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.3em;
-      color: var(--accent);
-      opacity: 0.6;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .founder-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.2rem;
-      color: #e0e0e0;
-      letter-spacing: 0.08em;
-      margin-bottom: 12px;
-    }
-
-    .founder-bio {
-      font-size: 0.83rem;
-      line-height: 1.8;
-      color: #666;
-      margin-bottom: 24px;
-      max-width: 560px;
-    }
-
-    .founder-link {
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      text-decoration: none;
-      opacity: 0.7;
-      transition: opacity 0.2s;
-    }
-
-    .founder-link:hover { opacity: 1; }
-
-    /* CTA SECTION */
-    .cta-section {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 100px 48px;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-    }
-
-    .cta-inner {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .cta-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      color: var(--accent);
-      letter-spacing: 0.08em;
-      text-shadow: 0 0 30px rgba(0,255,136,0.25);
-      margin-bottom: 16px;
-    }
-
-    .cta-sub {
-      font-size: 0.82rem;
-      color: #555;
-      line-height: 1.8;
-      margin-bottom: 36px;
-    }
-
-    /* FOOTER */
-    footer {
-      position: relative;
-      z-index: 1;
-      padding: 32px 48px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      opacity: 0.5;
-    }
-
-    .footer-copy {
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      letter-spacing: 0.1em;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 20px;
-    }
-
-    .footer-links a {
-      color: var(--text-dim);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--accent); }
-
-    /* STATUS DOT */
-    .status-bar {
-      position: fixed;
-      bottom: 20px;
-      right: 24px;
-      display: flex;
       align-items: center;
       gap: 7px;
-      font-size: 0.58rem;
+      font-size: 0.6rem;
       letter-spacing: 0.18em;
       color: var(--text-dim);
       text-transform: uppercase;
-      z-index: 10;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeIn 0.4s ease forwards 1.8s;
     }
-
     .status-dot {
       width: 5px;
       height: 5px;
@@ -554,31 +114,239 @@
       box-shadow: 0 0 6px var(--accent);
       animation: pulse 2.2s ease-in-out infinite;
     }
-
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
     }
 
+    /* Main container */
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 60px;
+    }
+
+    /* Profile Image */
+    .profile-img-wrap {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      padding: 6px;
+      border: 1px solid var(--accent-border);
+      position: relative;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.05s;
+    }
+    .profile-img-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px dashed var(--accent);
+      opacity: 0.3;
+      animation: spin 12s linear infinite;
+    }
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(250%) contrast(1.1) brightness(0.8);
+      opacity: 0.9;
+      transition: filter 0.5s ease, opacity 0.5s ease, box-shadow 0.5s ease;
+    }
+    .profile-img-wrap:hover .profile-img {
+      filter: grayscale(0%) sepia(0%) hue-rotate(0deg) saturate(100%) contrast(1) brightness(1);
+      opacity: 1;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Name */
+    .name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 13vw, 9.5rem);
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-shadow:
+        0 0 18px rgba(0, 255, 136, 0.55),
+        0 0 50px rgba(0, 255, 136, 0.25),
+        0 0 100px rgba(0, 255, 136, 0.1);
+      line-height: 1;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.15s;
+      user-select: none;
+    }
+
+    /* Role / typewriter */
+    .role {
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      color: #2a2a2a;
+      text-transform: uppercase;
+      margin-top: 14px;
+      min-height: 1em;
+      opacity: 0;
+      animation: fadeIn 0.1s ease forwards 1.0s;
+    }
+    .role-cursor {
+      display: inline-block;
+      width: 1px;
+      height: 0.75em;
+      background: var(--accent);
+      margin-left: 2px;
+      vertical-align: middle;
+      opacity: 0;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* Scanner line */
+    .scanner-wrap {
+      position: relative;
+      width: 220px;
+      height: 1px;
+      margin: 18px auto 30px;
+      background: rgba(0,255,136,0.12);
+      opacity: 0;
+      animation: fadeIn 0.4s ease forwards 0.9s;
+    }
+    .scanner-wrap::after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: 35%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: scan 3s ease-in-out infinite 1.2s;
+    }
+    @keyframes scan {
+      0%   { left: -35%; }
+      100% { left: 100%; }
+    }
+
+    /* Nav links */
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 1.05s;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0px;
+      padding: 9px 22px;
+      border: 1px solid var(--text-dim);
+      border-radius: 2px;
+      color: var(--text-mid);
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: lowercase;
+      transition: color 0.2s, border-color 0.2s, background 0.2s, gap 0.2s, padding-left 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-link .prompt {
+      display: inline-block;
+      color: var(--accent);
+      opacity: 0;
+      max-width: 0;
+      overflow: hidden;
+      transition: opacity 0.2s, max-width 0.25s ease;
+      font-size: 0.68rem;
+    }
+
+    .nav-link:hover {
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-glow);
+      gap: 7px;
+    }
+
+    .nav-link:hover .prompt {
+      opacity: 1;
+      max-width: 20px;
+    }
+
+    /* Social icons */
+    .icons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 1.25s;
+    }
+
+    .icons a {
+      color: var(--text-dim);
+      font-size: 1.25rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border: 1px solid #181818;
+      border-radius: 3px;
+      transition: color 0.22s, border-color 0.22s, transform 0.22s, box-shadow 0.22s;
+    }
+
+    .icons a:hover { transform: translateY(-4px); }
+
+    .icons a.github:hover {
+      color: #e0e0e0;
+      border-color: rgba(224,224,224,0.25);
+      box-shadow: 0 6px 20px rgba(224,224,224,0.1);
+    }
+    .icons a.facebook:hover {
+      color: #1877f2;
+      border-color: rgba(24,119,242,0.3);
+      box-shadow: 0 6px 20px rgba(24,119,242,0.2);
+    }
+    .icons a.youtube:hover {
+      color: #ff2020;
+      border-color: rgba(255,32,32,0.3);
+      box-shadow: 0 6px 20px rgba(255,32,32,0.2);
+    }
+    .icons a.linkedin:hover {
+      color: #0a84ff;
+      border-color: rgba(10,132,255,0.3);
+      box-shadow: 0 6px 20px rgba(10,132,255,0.2);
+    }
+
+    /* Keyframes */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes fadeIn {
       from { opacity: 0; }
       to   { opacity: 1; }
     }
 
-    /* MOBILE */
-    @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
-      .nav-links { display: none; }
-      section { padding: 70px 24px; }
-      .founder-inner { grid-template-columns: 1fr; text-align: center; }
-      .founder-photo-wrap { margin: 0 auto; }
-      .proof-strip { padding: 48px 24px; }
-      footer { padding: 24px; flex-direction: column; text-align: center; }
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container { padding: 30px 24px; }
+      .nav-links { gap: 8px; }
+      .icons { gap: 10px; }
+      .icons a { width: 42px; height: 42px; font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -586,149 +354,65 @@
 
   <div class="grain"></div>
 
-  <nav>
-    <a href="/" class="nav-logo">GorillaC</a>
-    <ul class="nav-links">
-      <li><a href="services">services</a></li>
-      <li><a href="about">about</a></li>
-      <li><a href="portfolio">work</a></li>
-      <li><a href="contact" class="nav-cta">get started</a></li>
-    </ul>
-  </nav>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-eyebrow">Tampa Bay · Pasco County · Wesley Chapel</div>
-    <h1 class="hero-logo">GorillaC</h1>
-    <p class="hero-tagline">Secure Websites &nbsp;·&nbsp; Cloud Solutions &nbsp;·&nbsp; AI Automation</p>
-    <p class="hero-sub">
-      Enterprise-grade technology for small businesses — without enterprise complexity or enterprise pricing.
-    </p>
-    <div class="hero-actions">
-      <a href="contact" class="btn-primary">Start a Project</a>
-      <a href="services" class="btn-ghost">View Services</a>
+  <div class="container">
+    <div class="profile-img-wrap">
+      <img src="imgs/IMG_2906.PNG" alt="Lee Dulcio" class="profile-img">
     </div>
-    <div class="hero-scroll">
-      <div class="hero-scroll-line"></div>
-      scroll
+    <h1 class="name">Lee Dulcio</h1>
+    <div class="role"><span id="role-text"></span><span class="role-cursor" id="role-cursor"></span></div>
+
+    <div class="scanner-wrap"></div>
+
+    <div class="nav-links">
+      <a href="resume" class="nav-link"><span class="prompt">&gt;_</span>resume</a>
+      <a href="portfolio" class="nav-link"><span class="prompt">&gt;_</span>portfolio</a>
+      <a href="contact" class="nav-link"><span class="prompt">&gt;_</span>contact</a>
     </div>
-  </div>
 
-  <!-- SERVICES -->
-  <div class="section-divider"></div>
-  <section>
-    <div class="section-label">What We Do</div>
-    <div class="section-title">Built for businesses<br>that mean business.</div>
-
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="service-icon"><i class="fas fa-globe"></i></div>
-        <div class="service-name">Web Development</div>
-        <div class="service-desc">Custom websites that load fast, rank in search, and convert visitors. From landing pages to full business sites — built to last.</div>
-        <a href="services#web" class="service-link">Starting at $499 →</a>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon"><i class="fas fa-cloud"></i></div>
-        <div class="service-name">Managed Hosting</div>
-        <div class="service-desc">GCP-powered cloud hosting with SSL, daily backups, uptime monitoring, and Cloudflare protection. We handle it so you don't have to.</div>
-        <a href="services#hosting" class="service-link">From $99/mo →</a>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
-        <div class="service-name">Cybersecurity</div>
-        <div class="service-desc">Vulnerability assessments, security monitoring, and hardening for small businesses that can't afford a breach.</div>
-        <a href="services#security" class="service-link">Learn more →</a>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon"><i class="fas fa-robot"></i></div>
-        <div class="service-name">AI Automation</div>
-        <div class="service-desc">AI-powered chatbots, lead qualification, appointment scheduling, and workflow automation that works while you sleep.</div>
-        <a href="services#ai" class="service-link">Learn more →</a>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon"><i class="fas fa-envelope"></i></div>
-        <div class="service-name">Google Workspace</div>
-        <div class="service-desc">Professional email, shared drives, and collaboration tools. Setup, migration, and ongoing management.</div>
-        <a href="services#workspace" class="service-link">Learn more →</a>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon"><i class="fas fa-cogs"></i></div>
-        <div class="service-name">Managed IT</div>
-        <div class="service-desc">A fractional IT partner for your business. Monitoring, maintenance, incident response, and monthly reporting.</div>
-        <a href="services#managed" class="service-link">From $199/mo →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROOF STRIP -->
-  <div class="proof-strip">
-    <div class="proof-inner">
-      <div>
-        <div class="proof-stat-num">99.9%</div>
-        <div class="proof-stat-label">Uptime SLA</div>
-      </div>
-      <div>
-        <div class="proof-stat-num">&lt;24hr</div>
-        <div class="proof-stat-label">Support Response</div>
-      </div>
-      <div>
-        <div class="proof-stat-num">GCP</div>
-        <div class="proof-stat-label">Powered Infrastructure</div>
-      </div>
-      <div>
-        <div class="proof-stat-num">Local</div>
-        <div class="proof-stat-label">Tampa Bay Based</div>
-      </div>
+    <div class="icons">
+      <a href="https://guru2linux.github.io/vuln-analysis-blog/" target="_blank" class="github" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://www.facebook.com/people/EELNice/100067874862744/" target="_blank" class="facebook" aria-label="Facebook">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://www.youtube.com/@Ghetto_IT" target="_blank" class="youtube" aria-label="YouTube">
+        <i class="fab fa-youtube"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/leedulcio" target="_blank" class="linkedin" aria-label="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
     </div>
   </div>
 
-  <!-- FOUNDER -->
-  <div class="founder-strip">
-    <div class="founder-inner">
-      <div class="founder-photo-wrap">
-        <img src="imgs/IMG_2906.PNG" alt="Lee Dulcio" class="founder-photo">
-      </div>
-      <div>
-        <div class="founder-label">The Founder</div>
-        <div class="founder-name">Lee Dulcio</div>
-        <p class="founder-bio">
-          DevSecOps engineer and security researcher based in Tampa Bay. I built GorillaC to give local businesses the same technology stack that large companies use — without the agency markup or the runaround.
-        </p>
-        <a href="about" class="founder-link">More about me →</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-section">
-    <div class="cta-inner">
-      <div class="cta-title">Ready to get started?</div>
-      <p class="cta-sub">Tell us about your business and what you need. We'll respond within one business day with a clear proposal — no sales pressure, no runaround.</p>
-      <a href="contact" class="btn-primary">Start the Conversation</a>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">GorillaC</div>
-    <div class="footer-copy">© 2026 GorillaC · Wesley Chapel, FL</div>
-    <div class="footer-links">
-      <a href="services">Services</a>
-      <a href="about">About</a>
-      <a href="portfolio">Work</a>
-      <a href="contact">Contact</a>
-    </div>
-  </footer>
-
-  <div class="status-bar">
+  <div class="status">
     <span class="status-dot"></span>
-    accepting clients
+    online
   </div>
+
+  <script>
+    const text = 'DevSecOps Engineer';
+    const el   = document.getElementById('role-text');
+    const cur  = document.getElementById('role-cursor');
+    let i = 0;
+
+    setTimeout(() => {
+      cur.style.opacity = '1';
+      const t = setInterval(() => {
+        if (i < text.length) {
+          el.textContent += text[i++];
+        } else {
+          clearInterval(t);
+          cur.style.animation = 'blink 1s step-end infinite';
+        }
+      }, 62);
+    }, 1100);
+  </script>
 
 </body>
 </html>
