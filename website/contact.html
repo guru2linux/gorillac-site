@@ -78,6 +78,7 @@
       box-shadow: 0 8px 40px rgba(0,0,0,0.6);
       position: relative;
       z-index: 1;
+      text-align: center;
     }
 
     h1 {
@@ -85,7 +86,6 @@
       color: var(--accent);
       font-size: 2.4rem;
       letter-spacing: 4px;
-      text-align: center;
       text-shadow: 0 0 20px rgba(0,255,136,0.3);
       margin-bottom: 6px;
     }
@@ -96,59 +96,20 @@
       background: var(--accent);
       box-shadow: 0 0 8px rgba(0,255,136,0.4);
       border-radius: 2px;
-      margin: 14px auto 10px;
+      margin: 14px auto 36px;
     }
 
-    .guest-count {
-      text-align: center;
-      font-size: 0.72rem;
-      color: #333;
-      letter-spacing: 1px;
+    .blurb {
+      font-size: 0.82rem;
+      color: #666;
+      letter-spacing: 0.5px;
+      line-height: 1.7;
       margin-bottom: 36px;
-      min-height: 18px;
     }
 
-    .guest-count span {
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    label {
-      display: block;
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent);
-      opacity: 0.7;
-      margin-bottom: 6px;
-      margin-top: 20px;
-    }
-
-    input, textarea {
-      width: 100%;
-      background: #080808;
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: #ddd;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.88rem;
-      padding: 10px 14px;
-      outline: none;
-      transition: border-color 0.2s;
-      resize: vertical;
-    }
-
-    input:focus, textarea:focus {
-      border-color: var(--accent-border);
-    }
-
-    textarea { min-height: 120px; }
-
-    button {
-      margin-top: 28px;
-      width: 100%;
-      padding: 12px;
+    .mailto-btn {
+      display: inline-block;
+      padding: 14px 32px;
       background: transparent;
       border: 1px solid var(--accent-border);
       border-radius: 3px;
@@ -157,30 +118,21 @@
       font-family: 'JetBrains Mono', monospace;
       letter-spacing: 3px;
       text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
     }
 
-    button:hover:not(:disabled) {
+    .mailto-btn:hover {
       background: var(--accent-dim);
       border-color: var(--accent);
     }
 
-    button:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
+    .email-line {
+      margin-top: 24px;
+      font-size: 0.75rem;
+      color: #444;
+      letter-spacing: 1px;
     }
-
-    .feedback {
-      margin-top: 18px;
-      font-size: 0.78rem;
-      text-align: center;
-      min-height: 20px;
-      letter-spacing: 0.5px;
-    }
-
-    .feedback.success { color: #00ff88; }
-    .feedback.error   { color: #e05a5a; }
   </style>
 </head>
 <body>
@@ -192,96 +144,10 @@
   <div class="card">
     <h1>CONTACT</h1>
     <div class="divider"></div>
-    <div class="guest-count" id="guest-count">&nbsp;</div>
-
-    <form id="contact-form" novalidate>
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" placeholder="Your name" required />
-
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="your@email.com" required />
-
-      <label for="message">Message</label>
-      <textarea id="message" name="message" placeholder="How can I help?" required></textarea>
-
-      <button type="submit" id="submit-btn">Send Message</button>
-    </form>
-
-    <div class="feedback" id="feedback"></div>
+    <p class="blurb">Open to new opportunities, collaborations,<br>and interesting problems.</p>
+    <a class="mailto-btn" href="mailto:leedulcio@gorillac.net">Send Me an Email</a>
+    <p class="email-line">leedulcio@gorillac.net</p>
   </div>
-
-  <script>
-    const API = 'https://gorillac-contact-gkkpjwn5na-uc.a.run.app';
-
-    function parseJSON(text) {
-      if (!text || !text.trim()) throw new Error('Empty response from server.');
-      return JSON.parse(text);
-    }
-
-    function setCount(n) {
-      const el = document.getElementById('guest-count');
-      if (n > 0) {
-        el.innerHTML = `<span>${n}</span> ${n === 1 ? 'person has' : 'people have'} reached out`;
-      } else {
-        el.textContent = 'Be the first to reach out';
-      }
-    }
-
-    // Load guest count on page load — silent on failure
-    fetch(API)
-      .then(r => r.text())
-      .then(text => { setCount(parseJSON(text).count || 0); })
-      .catch(() => { setCount(0); });
-
-    // Form submit
-    document.getElementById('contact-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const name    = document.getElementById('name').value.trim();
-      const email   = document.getElementById('email').value.trim();
-      const message = document.getElementById('message').value.trim();
-      const btn     = document.getElementById('submit-btn');
-      const fb      = document.getElementById('feedback');
-
-      fb.className = 'feedback';
-      fb.textContent = '';
-
-      if (!name || !email || !message) {
-        fb.className = 'feedback error';
-        fb.textContent = 'Please fill out all fields.';
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-
-      fetch(API, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message }),
-      })
-        .then(r => r.text().then(text => ({ status: r.status, text })))
-        .then(({ status, text }) => {
-          const data = parseJSON(text);
-          if (data.success) {
-            fb.className = 'feedback success';
-            fb.textContent = "Message sent — I'll be in touch.";
-            document.getElementById('contact-form').reset();
-            setCount(data.count || 1);
-          } else {
-            throw new Error(data.error || `Server error (${status})`);
-          }
-        })
-        .catch(err => {
-          fb.className = 'feedback error';
-          fb.textContent = err.message || 'Something went wrong. Please try again.';
-        })
-        .finally(() => {
-          btn.disabled = false;
-          btn.textContent = 'Send Message';
-        });
-    });
-  </script>
 
 </body>
 </html>
