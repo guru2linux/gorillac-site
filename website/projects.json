@@ -46,7 +46,7 @@
       "role": "Sole Architect & Engineer",
       "tools": ["Python", "FastAPI", "Playwright", "SQLAlchemy", "MySQL", "Alembic", "Claude API (Anthropic)", "Docker", "Jinja2", "Markdown"],
       "outcome": "AI-driven pipeline that searches, scores, and lists high-fit jobs. Claude handles custom form questions, while the platform maintains a live list of scored opportunities with audit trails for every submission.",
-      "link": "job-copilot-demo"
+      "link": "job-copilot-demo.html"
     },
     {
       "title": "Insurance Lead Automation Pipeline — Serverless AWS Orchestration",

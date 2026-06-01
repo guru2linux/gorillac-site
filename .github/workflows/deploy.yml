@@ -1,0 +1,14 @@
+name: Deploy gorillac.net
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, gorillac-site]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync website to /opt/gorillac
+        run: rsync -av --delete website/ /opt/gorillac/
