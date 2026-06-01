@@ -38,7 +38,7 @@
       "role": "Sole Architect & Engineer",
       "tools": ["Python", "Dash", "Plotly", "Pandas", "SQLAlchemy", "MySQL", "Gmail API", "Google OAuth2", "scikit-learn", "Jupyter"],
       "outcome": "End-to-end pipeline from inbox to insight — Gmail emails are auto-parsed and status-classified, CSV bulk imports are deduplicated on ingest, and the live dashboard surfaces response rates, rejection trends, and weekly cadence at a glance.",
-      "link": "job-application-tracker-demo"
+      "link": "job-application-tracker-demo.html"
     },
     {
       "title": "Job Copilot — AI-Powered Job Search, Scoring Platform",
