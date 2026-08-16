@@ -3,12 +3,20 @@ name: Deploy gorillac.net
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, gorillac-site]
+    # REM-003: runs on the isolated ci-runner CT, not on the production box.
+    # Reaches qaserver only via a forced-command SSH key (ci-deploy.sh).
+    runs-on: [self-hosted, ci-runner]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Sync website to /opt/gorillac
-        run: rsync -av --delete website/ /opt/gorillac/
+      - name: Ship website to qaserver via restricted deploy channel
+        run: |
+          tar czf - website \
+            | ssh -i ~/.ssh/ci_deploy_ed25519 \
+                  -o BatchMode=yes -o StrictHostKeyChecking=yes \
+                  -o ConnectTimeout=15 \
+                  deploy@192.168.0.84 deploy-gorillac
