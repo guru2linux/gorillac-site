@@ -49,6 +49,30 @@ restricted `deploy-gorillac` channel. The runner has no other access to producti
 Only `website/` is shipped. `deploy/`, `assets-src/`, and `notes/` stay in the repo and are never
 served — keep it that way when adding files, since anything placed under `website/` becomes public.
 
+After shipping, the workflow purges the Cloudflare cache. This matters because assets are served
+with `max-age=2592000` (30 days) — without a purge, a replaced image keeps serving the old copy from
+the edge for up to a month even though the origin is correct.
+
+### Required repository secrets
+The purge step needs both of these (Settings → Secrets and variables → Actions):
+
+| Secret | Where to get it |
+|---|---|
+| `CLOUDFLARE_ZONE_ID` | Cloudflare dashboard → the `gorillac.net` zone → Overview → API section, right-hand column |
+| `CLOUDFLARE_API_TOKEN` | My Profile → API Tokens → Create Token → **Zone / Cache Purge / Purge**, scoped to the `gorillac.net` zone only |
+
+Scope the token to cache-purge on that one zone — it does not need any other permission, and it is
+readable on the `ci-runner` box while the job runs. If either secret is missing the deploy still
+ships, but the purge step fails loudly rather than silently leaving stale content at the edge.
+
+To purge by hand:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/purge_cache" \
+  -H "Authorization: Bearer <TOKEN>" -H "Content-Type: application/json" \
+  --data '{"purge_everything":true}'
+```
+
 ### Origin nginx config
 `deploy/nginx-gorillac.conf` is **not** applied by the deploy workflow — it is a manual step on the
 origin host:

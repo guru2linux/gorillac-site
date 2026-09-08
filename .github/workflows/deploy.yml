@@ -20,3 +20,46 @@ jobs:
                   -o BatchMode=yes -o StrictHostKeyChecking=yes \
                   -o ConnectTimeout=15 \
                   deploy@192.168.0.84 deploy-gorillac
+
+      # Origin is updated above, but Cloudflare still serves the previous copy
+      # until each object's TTL expires — assets carry max-age=2592000 (30 days),
+      # so without this a replaced image can serve stale for a month.
+      # Purging everything is fine here: the whole site is a few hundred KB and
+      # refills from origin on the next request.
+      - name: Purge Cloudflare cache
+        env:
+          CF_ZONE_ID:   ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CF_ZONE_ID:-}" ] || [ -z "${CF_API_TOKEN:-}" ]; then
+            echo "::error::CLOUDFLARE_ZONE_ID / CLOUDFLARE_API_TOKEN not set."
+            echo "The deploy succeeded, but the edge cache was NOT purged."
+            echo "Add both as repository secrets (token needs Zone > Cache Purge > Purge)."
+            exit 1
+          fi
+
+          # Capture body and status separately; Cloudflare can return HTTP 200
+          # with {"success": false}, so the status code alone proves nothing.
+          http_status=$(
+            curl -sS --max-time 30 \
+                 -o /tmp/cf-purge.json -w '%{http_code}' \
+                 -X POST "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
+                 -H "Authorization: Bearer ${CF_API_TOKEN}" \
+                 -H "Content-Type: application/json" \
+                 --data '{"purge_everything":true}'
+          )
+
+          # Redact any token echoed back before this reaches the public log.
+          sed -i "s/${CF_API_TOKEN}/***/g" /tmp/cf-purge.json 2>/dev/null || true
+
+          if [ "$http_status" != "200" ] || ! grep -q '"success":[[:space:]]*true' /tmp/cf-purge.json; then
+            echo "::error::Cache purge failed (HTTP $http_status)."
+            cat /tmp/cf-purge.json
+            rm -f /tmp/cf-purge.json
+            exit 1
+          fi
+
+          rm -f /tmp/cf-purge.json
+          echo "Cloudflare cache purged for zone ${CF_ZONE_ID:0:8}…"
