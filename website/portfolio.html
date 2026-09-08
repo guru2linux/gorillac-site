@@ -310,7 +310,12 @@
   </div>
 
   <script>
-    fetch('projects.json')
+    // `cache: 'no-cache'` forces a revalidation request rather than trusting the
+    // browser's copy. The origin serves projects.json with max-age=2592000, so
+    // without this an edit to the portfolio stays invisible to anyone who has
+    // loaded the page before — for up to 30 days. Revalidating is cheap: the
+    // server answers 304 with no body when nothing has changed.
+    fetch('projects.json', { cache: 'no-cache' })
       .then(res => {
         if (!res.ok) throw new Error('Failed to load data');
         return res.json();

@@ -49,29 +49,28 @@ restricted `deploy-gorillac` channel. The runner has no other access to producti
 Only `website/` is shipped. `deploy/`, `assets-src/`, and `notes/` stay in the repo and are never
 served — keep it that way when adding files, since anything placed under `website/` becomes public.
 
-After shipping, the workflow purges the Cloudflare cache. This matters because assets are served
-with `max-age=2592000` (30 days) — without a purge, a replaced image keeps serving the old copy from
-the edge for up to a month even though the origin is correct.
+### Caching gotcha
+The origin currently serves `projects.json` with `max-age=2592000` (30 days). Since the portfolio
+page renders from that file, an edit to it can stay invisible to anyone who has loaded the page
+before — the browser never re-requests it. Two mitigations are in place:
 
-### Required repository secrets
-The purge step needs both of these (Settings → Secrets and variables → Actions):
+- `portfolio.html` fetches with `{ cache: 'no-cache' }`, forcing a revalidation (a cheap 304 when
+  nothing changed). This works regardless of server config.
+- `deploy/nginx-gorillac.conf` sets `no-cache` on `.json`/`.xml`/`.txt` as well as `.html`, which
+  fixes it at the source — but only once that config is installed on the origin.
 
-| Secret | Where to get it |
-|---|---|
-| `CLOUDFLARE_ZONE_ID` | Cloudflare dashboard → the `gorillac.net` zone → Overview → API section, right-hand column |
-| `CLOUDFLARE_API_TOKEN` | My Profile → API Tokens → Create Token → **Zone / Cache Purge / Purge**, scoped to the `gorillac.net` zone only |
-
-Scope the token to cache-purge on that one zone — it does not need any other permission, and it is
-readable on the `ci-runner` box while the job runs. If either secret is missing the deploy still
-ships, but the purge step fails loudly rather than silently leaving stale content at the edge.
-
-To purge by hand:
+If you replace an **image** without renaming it, the edge and browser copies can still be stale.
+Either rename the file (`avatar-v2.webp`) or purge manually:
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/purge_cache" \
+curl -X POST "https://api.cloudflare.com/client/v4/zones/9a92398265ad7b4015449ac0bd0748cf/purge_cache" \
   -H "Authorization: Bearer <TOKEN>" -H "Content-Type: application/json" \
   --data '{"purge_everything":true}'
 ```
+
+An automated purge step was tried and removed — it needed a `Zone / Cache Purge` API token stored as
+a repo secret, which is more credential surface than a site this size warrants. Renaming changed
+images achieves the same thing with no secret to manage.
 
 ### Origin nginx config
 `deploy/nginx-gorillac.conf` is **not** applied by the deploy workflow — it is a manual step on the
