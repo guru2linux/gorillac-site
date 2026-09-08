@@ -4,6 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lee Dulcio — Resume</title>
+  <meta name="description" content="Resume of Lee Dulcio, DevSecOps Engineer in Tampa, FL — cloud security across Azure, AWS and GCP, CI/CD pipeline hardening, vulnerability management, and secure API design. U.S. Navy veteran."/>
+  <link rel="canonical" href="https://gorillac.net/resume.html"/>
+  <meta name="theme-color" content="#050505"/>
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+  <!-- Social preview -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="gorillac.net"/>
+  <meta property="og:url" content="https://gorillac.net/resume.html"/>
+  <meta property="og:title" content="Lee Dulcio — Resume"/>
+  <meta property="og:description" content="Resume of Lee Dulcio, DevSecOps Engineer in Tampa, FL — cloud security across Azure, AWS and GCP, CI/CD pipeline hardening, vulnerability management, and secure API design. U.S. Navy veteran."/>
+  <meta property="og:image" content="https://gorillac.net/imgs/og-image.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Gorillac — technical consultancy and strategy"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Lee Dulcio — Resume"/>
+  <meta name="twitter:description" content="Resume of Lee Dulcio, DevSecOps Engineer in Tampa, FL — cloud security across Azure, AWS and GCP, CI/CD pipeline hardening, vulnerability management, and secure API design. U.S. Navy veteran."/>
+  <meta name="twitter:image" content="https://gorillac.net/imgs/og-image.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -78,11 +102,11 @@
     .contact {
       margin-top: 12px;
       font-size: 0.82rem;
-      color: #444;
+      color: #9a9a9a;
     }
 
     .contact a {
-      color: #444;
+      color: #9a9a9a;
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -147,7 +171,7 @@
 
     .job-date {
       font-size: 0.8rem;
-      color: #555;
+      color: #8f8f8f;
       white-space: nowrap;
     }
 
@@ -256,7 +280,7 @@
     .cert-subsection-label {
       font-size: 0.65rem;
       letter-spacing: 2px;
-      color: #3a3a3a;
+      color: #8a8a8a;
       text-transform: uppercase;
       margin-bottom: 10px;
       margin-top: 4px;
@@ -308,7 +332,7 @@
     }
 
     .back a {
-      color: #555;
+      color: #8a8a8a;
       text-decoration: none;
       font-size: 0.75rem;
       letter-spacing: 2px;
@@ -321,6 +345,76 @@
 
     @media (max-width: 640px) {
       .container { padding: 32px 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .fade-in { opacity: 1 !important; transform: none !important; }
+    }
+
+    /* Print / save-as-PDF: recruiters do this. Drop the dark theme to ink-friendly
+       black-on-white, unhide anything the scroll observer hasn't revealed yet, and
+       keep entries from splitting across pages. */
+    @media print {
+      @page { margin: 14mm; }
+
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        padding: 0 !important;
+        font-size: 10.5pt;
+      }
+      body::before { display: none !important; }
+
+      .back { display: none !important; }
+
+      .container {
+        max-width: none;
+        background: #fff !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+      }
+
+      /* The IntersectionObserver only reveals sections that scrolled into view;
+         without this, printing emits blank pages for everything below the fold. */
+      .fade-in, .header, .section {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      h1, h2, .section-title, .job-company, .cert-subsection-label {
+        color: #000 !important;
+        text-shadow: none !important;
+        opacity: 1 !important;
+      }
+      .divider { background: #000 !important; box-shadow: none !important; }
+
+      p, li, .contact, .contact a, .job-title, .job-date, .edu-item {
+        color: #000 !important;
+      }
+
+      .skill, .cert-badge {
+        background: #fff !important;
+        border: 1px solid #999 !important;
+        color: #000 !important;
+      }
+
+      .cert-logo-card {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+      }
+
+      a { text-decoration: none; }
+
+      .section, .job, .cert-logo-card { break-inside: avoid; page-break-inside: avoid; }
+      .section-title { break-after: avoid; page-break-after: avoid; }
     }
   </style>
 </head>
@@ -338,11 +432,11 @@
       <h2>DevSecOps Engineer</h2>
       <div class="divider"></div>
       <div class="contact">
-        Tampa, USA
+        Tampa, FL
         <span>•</span>
         <a href="mailto:leedulcio@gorillac.net">leedulcio@gorillac.net</a>
         <span>•</span>
-        (813) 483-9415
+        <a href="https://www.linkedin.com/in/leedulcio" target="_blank" rel="noopener noreferrer">linkedin.com/in/leedulcio</a>
       </div>
     </div>
 
@@ -391,10 +485,10 @@
         </div>
         <div class="job-company">Rapid7 — Tampa, FL</div>
         <ul>
-          <li>Partnered with engineering teams to remediate backend vulnerabilities across .NET and Python environments</li>
-          <li>Supported deployment of security monitoring solutions across hybrid infrastructure environments</li>
-          <li>Reduced vulnerability resolution timelines by 20%+ through structured remediation workflows</li>
-          <li>Strengthened secure architecture alignment across enterprise deployments</li>
+          <li>Supported enterprise customers deploying and troubleshooting InsightVM vulnerability management across hybrid environments</li>
+          <li>Diagnosed complex network and product issues within vulnerability scanning infrastructure (TCP/IP, DNS, LDAP, NMAP)</li>
+          <li>Built regex-driven log analysis workflows to investigate reported issues and isolate root cause</li>
+          <li>Acted as liaison between customers and Engineering/Product teams, reducing vulnerability resolution timelines</li>
         </ul>
       </div>
 

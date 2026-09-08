@@ -3,7 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lee Dulcio</title>
+  <title>Lee Dulcio — DevSecOps Engineer</title>
+  <meta name="description" content="Lee Dulcio — DevSecOps Engineer in Tampa, FL. Securing cloud-native applications across Azure, AWS, and GCP: CI/CD pipeline security, vulnerability management, and secure backend architecture."/>
+  <link rel="canonical" href="https://gorillac.net/"/>
+  <meta name="theme-color" content="#050505"/>
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+  <!-- Social preview -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="gorillac.net"/>
+  <meta property="og:url" content="https://gorillac.net/"/>
+  <meta property="og:title" content="Lee Dulcio — DevSecOps Engineer"/>
+  <meta property="og:description" content="DevSecOps Engineer in Tampa, FL. Securing cloud-native applications across Azure, AWS, and GCP: CI/CD pipeline security, vulnerability management, and secure backend architecture."/>
+  <meta property="og:image" content="https://gorillac.net/imgs/og-image.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Gorillac — technical consultancy and strategy"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Lee Dulcio — DevSecOps Engineer"/>
+  <meta name="twitter:description" content="DevSecOps Engineer in Tampa, FL. Cloud security, CI/CD pipeline hardening, and vulnerability management."/>
+  <meta name="twitter:image" content="https://gorillac.net/imgs/og-image.jpg"/>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -14,8 +39,11 @@
       --accent: #00ff88;
       --accent-glow: rgba(0, 255, 136, 0.18);
       --accent-border: rgba(0, 255, 136, 0.22);
-      --text-dim: #444;
-      --text-mid: #888;
+      /* UI chrome (borders, idle icons) — meets the 3:1 non-text contrast floor */
+      --ui-dim: #5c5c5c;
+      /* Readable body/label text on --bg — meets 4.5:1 */
+      --text-dim: #8a8a8a;
+      --text-mid: #a8a8a8;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,11 +51,10 @@
     body {
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
       background: var(--bg);
       font-family: 'JetBrains Mono', monospace;
-      overflow: hidden;
+      overflow-x: hidden;
       position: relative;
       cursor: crosshair;
     }
@@ -119,12 +146,16 @@
       50%       { opacity: 0.4; transform: scale(0.7); }
     }
 
-    /* Main container */
+    /* Main container.
+       `margin: auto` (not `align-items: center` on the body) so that when the
+       content is taller than the viewport — phone landscape, short windows —
+       it overflows downward and stays scrollable instead of being clipped. */
     .container {
       position: relative;
       z-index: 1;
       text-align: center;
       padding: 40px 60px;
+      margin: auto;
     }
 
     /* Profile Image */
@@ -188,7 +219,7 @@
     .role {
       font-size: 0.62rem;
       letter-spacing: 0.28em;
-      color: #2a2a2a;
+      color: var(--text-mid);
       text-transform: uppercase;
       margin-top: 14px;
       min-height: 1em;
@@ -251,7 +282,7 @@
       align-items: center;
       gap: 0px;
       padding: 9px 22px;
-      border: 1px solid var(--text-dim);
+      border: 1px solid var(--ui-dim);
       border-radius: 2px;
       color: var(--text-mid);
       text-decoration: none;
@@ -295,7 +326,7 @@
     }
 
     .icons a {
-      color: var(--text-dim);
+      color: var(--ui-dim);
       font-size: 1.25rem;
       text-decoration: none;
       display: flex;
@@ -303,7 +334,7 @@
       justify-content: center;
       width: 46px;
       height: 46px;
-      border: 1px solid #181818;
+      border: 1px solid #262626;
       border-radius: 3px;
       transition: color 0.22s, border-color 0.22s, transform 0.22s, box-shadow 0.22s;
     }
@@ -348,6 +379,22 @@
       .icons { gap: 10px; }
       .icons a { width: 42px; height: 42px; font-size: 1.1rem; }
     }
+
+    /* Reduced motion: drop the perpetual animations (grain flicker, spinning
+       ring, scanner sweep, pulsing dot) and land everything in its end state. */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .grain { display: none; }
+      .scanner-wrap::after { display: none; }
+      .corner, .status, .nav-links, .icons,
+      .profile-img-wrap, .name, .role, .scanner-wrap { opacity: 1; transform: none; }
+      .role-cursor { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -361,7 +408,11 @@
 
   <div class="container">
     <div class="profile-img-wrap">
-      <img src="imgs/IMG_2906.PNG" alt="Lee Dulcio" class="profile-img">
+      <picture>
+        <source srcset="imgs/avatar.webp" type="image/webp">
+        <img src="imgs/avatar.png" alt="Gorillac logo" class="profile-img"
+             width="300" height="300" fetchpriority="high" decoding="async">
+      </picture>
     </div>
     <h1 class="name">Lee Dulcio</h1>
     <div class="role"><span id="role-text"></span><span class="role-cursor" id="role-cursor"></span></div>
@@ -375,17 +426,17 @@
     </div>
 
     <div class="icons">
-      <a href="https://guru2linux.github.io/vuln-analysis-blog/" target="_blank" class="github" aria-label="GitHub">
-        <i class="fab fa-github"></i>
+      <a href="https://guru2linux.github.io/vuln-analysis-blog/" target="_blank" rel="noopener noreferrer" class="github" aria-label="Vulnerability analysis blog on GitHub Pages">
+        <i class="fab fa-github" aria-hidden="true"></i>
       </a>
-      <a href="https://www.facebook.com/people/EELNice/100067874862744/" target="_blank" class="facebook" aria-label="Facebook">
-        <i class="fab fa-facebook"></i>
+      <a href="https://www.facebook.com/people/EELNice/100067874862744/" target="_blank" rel="noopener noreferrer" class="facebook" aria-label="Facebook profile">
+        <i class="fab fa-facebook" aria-hidden="true"></i>
       </a>
-      <a href="https://www.youtube.com/@Ghetto_IT" target="_blank" class="youtube" aria-label="YouTube">
-        <i class="fab fa-youtube"></i>
+      <a href="https://www.youtube.com/@Ghetto_IT" target="_blank" rel="noopener noreferrer" class="youtube" aria-label="YouTube channel">
+        <i class="fab fa-youtube" aria-hidden="true"></i>
       </a>
-      <a href="https://www.linkedin.com/in/leedulcio" target="_blank" class="linkedin" aria-label="LinkedIn">
-        <i class="fab fa-linkedin"></i>
+      <a href="https://www.linkedin.com/in/leedulcio" target="_blank" rel="noopener noreferrer" class="linkedin" aria-label="LinkedIn profile">
+        <i class="fab fa-linkedin" aria-hidden="true"></i>
       </a>
     </div>
   </div>

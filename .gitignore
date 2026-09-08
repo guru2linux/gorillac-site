@@ -8,3 +8,6 @@ GEMINI.md
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Scratch work for other repos - not part of the site
+notes/

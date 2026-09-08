@@ -4,6 +4,30 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Job Application Tracker — Demo</title>
+  <meta name="description" content="Interactive demo of a Gmail-integrated job application tracker: automatic status classification, response-rate analytics, and weekly application trends."/>
+  <link rel="canonical" href="https://gorillac.net/job-application-tracker-demo.html"/>
+  <meta name="theme-color" content="#050505"/>
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+  <!-- Social preview -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="gorillac.net"/>
+  <meta property="og:url" content="https://gorillac.net/job-application-tracker-demo.html"/>
+  <meta property="og:title" content="Job Application Tracker — Interactive Demo"/>
+  <meta property="og:description" content="Interactive demo of a Gmail-integrated job application tracker: automatic status classification, response-rate analytics, and weekly application trends."/>
+  <meta property="og:image" content="https://gorillac.net/imgs/og-image.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Gorillac — technical consultancy and strategy"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Job Application Tracker — Interactive Demo"/>
+  <meta name="twitter:description" content="Interactive demo of a Gmail-integrated job application tracker: automatic status classification, response-rate analytics, and weekly application trends."/>
+  <meta name="twitter:image" content="https://gorillac.net/imgs/og-image.jpg"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     :root {
@@ -14,7 +38,7 @@
       --border:   #252525;
       --text:     #cccccc;
       --bright:   #ffffff;
-      --muted:    #666666;
+      --muted:    #8a8a8a;
       --accent:   #00cc6a;
       --accent-dim: rgba(0,204,106,0.12);
       --accent-border: rgba(0,204,106,0.25);
@@ -457,6 +481,15 @@
     .view.active { display: block; }
 
     .empty-row td { text-align: center; color: var(--muted); padding: 36px; font-style: italic; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -487,7 +520,7 @@
       <div class="stat-card">
         <div class="s-label">Total Applications</div>
         <div class="s-value" id="stat-total">—</div>
-        <div class="s-sub">Mar – Apr 2026</div>
+        <div class="s-sub">Jul – Sep 2026</div>
       </div>
       <div class="stat-card">
         <div class="s-label">Received</div>
@@ -645,46 +678,57 @@
 <script>
 // ── Sample data ──────────────────────────────────────────────────────────────
 const APPS = [
-  { date:'2026-04-15', company:'Cloudflare',        role:'Platform Engineer',                     status:'Interview / Next Steps', notes:'Phone screen scheduled Apr 18' },
-  { date:'2026-04-14', company:'Datadog',            role:'Security Engineer – Application',       status:'Application Received',   notes:'' },
-  { date:'2026-04-14', company:'HashiCorp',          role:'Backend Software Engineer',             status:'Application Received',   notes:'' },
-  { date:'2026-04-13', company:'Tailscale',          role:'Backend Engineer (Go/Python)',           status:'Application Received',   notes:'' },
-  { date:'2026-04-12', company:'Grafana Labs',       role:'Software Engineer – Backend',           status:'Application Received',   notes:'' },
-  { date:'2026-04-11', company:'Render',             role:'Platform Engineer – Infrastructure',    status:'Rejected',               notes:'Auto-rejection email Apr 13' },
-  { date:'2026-04-11', company:'Vercel',             role:'Edge Infrastructure Engineer',          status:'Application Received',   notes:'' },
-  { date:'2026-04-10', company:'Temporal',           role:'Developer Experience Engineer',         status:'Application Received',   notes:'' },
-  { date:'2026-04-10', company:'Neon Tech',          role:'Backend Developer – Postgres',          status:'Rejected',               notes:'Position filled internally' },
-  { date:'2026-04-09', company:'NordSecurity',       role:'DevOps Engineer (Saily)',               status:'Interview / Next Steps', notes:'Technical interview Apr 17' },
-  { date:'2026-04-08', company:'Rebuy Inc.',         role:'Sr Software Engineer – Backend',        status:'Application Received',   notes:'' },
-  { date:'2026-04-07', company:'Supabase',           role:'Backend Engineer – Realtime',           status:'Rejected',               notes:'' },
-  { date:'2026-04-07', company:'1Password',          role:'DevSecOps Engineer',                    status:'Application Received',   notes:'' },
-  { date:'2026-04-06', company:'PlanetScale',        role:'Cloud Security Engineer',               status:'Application Received',   notes:'' },
-  { date:'2026-04-05', company:'Fly.io',             role:'Infrastructure Engineer',               status:'Application Received',   notes:'' },
-  { date:'2026-04-04', company:'Stripe',             role:'Infrastructure Security Engineer',      status:'Offer',                  notes:'Offer received Apr 15 — reviewing' },
-  { date:'2026-04-03', company:'Wiz',                role:'Cloud Security Engineer',               status:'Interview / Next Steps', notes:'Final round Apr 19' },
-  { date:'2026-04-02', company:'Turso',              role:'Software Engineer – Distributed DB',    status:'Rejected',               notes:'' },
-  { date:'2026-04-01', company:'US Dept of Defense', role:'DevSecOps Engineer – GS-13',           status:'Incomplete / Started',   notes:'USAJobs form — finishing SF-86 section' },
-  { date:'2026-03-31', company:'Buf Technologies',   role:'Backend Engineer – API Platform',       status:'Rejected',               notes:'' },
-  { date:'2026-03-28', company:'Astro',              role:'Developer Advocate / Engineer',         status:'Rejected',               notes:'' },
-  { date:'2026-03-27', company:'Snowflake',          role:'Security Software Engineer',            status:'Rejected',               notes:'Rejection email Mar 30' },
-  { date:'2026-03-26', company:'MongoDB',            role:'Platform Engineer',                     status:'Application Received',   notes:'' },
-  { date:'2026-03-25', company:'Elastic',            role:'Site Reliability Engineer',             status:'Interview / Next Steps', notes:'Onsite scheduled Apr 10' },
-  { date:'2026-03-24', company:'Twilio',             role:'Security Engineer',                     status:'Rejected',               notes:'' },
-  { date:'2026-03-22', company:'Fastly',             role:'Infrastructure Engineer',               status:'Application Received',   notes:'' },
-  { date:'2026-03-21', company:'GitHub',             role:'DevSecOps Engineer',                    status:'Application Received',   notes:'' },
-  { date:'2026-03-20', company:'Netlify',            role:'Backend Engineer',                      status:'Rejected',               notes:'' },
-  { date:'2026-03-19', company:'Crowdstrike',        role:'Cloud Security Engineer',               status:'Interview / Next Steps', notes:'Recruiter screen complete' },
-  { date:'2026-03-18', company:'Palo Alto Networks', role:'Software Engineer – Security',          status:'Application Received',   notes:'' },
-  { date:'2026-03-17', company:'Lacework',           role:'Platform Engineer',                     status:'Rejected',               notes:'' },
-  { date:'2026-03-15', company:'Snyk',               role:'Backend Software Engineer',             status:'Application Received',   notes:'' },
-  { date:'2026-03-14', company:'Orca Security',      role:'Cloud Security Engineer',               status:'Rejected',               notes:'' },
-  { date:'2026-03-13', company:'Bridgecrew',         role:'DevSecOps Engineer',                    status:'Application Received',   notes:'' },
-  { date:'2026-03-12', company:'Aqua Security',      role:'Platform Security Engineer',            status:'Rejected',               notes:'' },
-  { date:'2026-03-11', company:'Sysdig',             role:'Cloud Security Engineer',               status:'Application Received',   notes:'' },
-  { date:'2026-03-10', company:'Lacework',           role:'Security Platform Engineer',            status:'Rejected',               notes:'Duplicate outreach — marked closed' },
-  { date:'2026-03-08', company:'JupiterOne',         role:'Cloud Security Engineer',               status:'Application Received',   notes:'' },
-  { date:'2026-03-07', company:'Accurics',           role:'DevSecOps Engineer',                    status:'Rejected',               notes:'' },
-  { date:'2026-03-05', company:'Tines',              role:'Security Automation Engineer',          status:'Application Received',   notes:'' },
+  // Repeat applications to the same company — these are what the company-level
+  // response-rate panel is built to analyse.
+  { date:'2026-08-18', company:'Datadog',            role:'Cloud SIEM Engineer',                   status:'Interview / Next Steps', notes:'Recruiter screen Aug 24' },
+  { date:'2026-08-14', company:'Cloudflare',         role:'Security Engineer – Detection',         status:'Interview / Next Steps', notes:'Team match call Aug 20' },
+  { date:'2026-08-13', company:'NordSecurity',       role:'Cloud Security Engineer',               status:'Rejected',               notes:'' },
+  { date:'2026-08-11', company:'Wiz',                role:'Detection & Response Engineer',         status:'Rejected',               notes:'' },
+  { date:'2026-08-07', company:'Stripe',             role:'Detection Engineer',                    status:'Rejected',               notes:'' },
+  { date:'2026-08-04', company:'Datadog',            role:'Platform Security Engineer',            status:'Rejected',               notes:'' },
+  { date:'2026-07-29', company:'Cloudflare',         role:'SRE – Edge Network',                    status:'Rejected',               notes:'' },
+  { date:'2026-07-27', company:'Wiz',                role:'Security Research Engineer',            status:'Rejected',               notes:'' },
+  { date:'2026-07-24', company:'Datadog',            role:'Site Reliability Engineer',             status:'Rejected',               notes:'' },
+  { date:'2026-09-02', company:'Cloudflare',        role:'Platform Engineer',                     status:'Interview / Next Steps', notes:'Phone screen scheduled Sep 5' },
+  { date:'2026-09-01', company:'Datadog',            role:'Security Engineer – Application',       status:'Application Received',   notes:'' },
+  { date:'2026-09-01', company:'HashiCorp',          role:'Backend Software Engineer',             status:'Application Received',   notes:'' },
+  { date:'2026-08-31', company:'Tailscale',          role:'Backend Engineer (Go/Python)',           status:'Application Received',   notes:'' },
+  { date:'2026-08-30', company:'Grafana Labs',       role:'Software Engineer – Backend',           status:'Application Received',   notes:'' },
+  { date:'2026-08-29', company:'Render',             role:'Platform Engineer – Infrastructure',    status:'Rejected',               notes:'Auto-rejection email Aug 31' },
+  { date:'2026-08-29', company:'Vercel',             role:'Edge Infrastructure Engineer',          status:'Application Received',   notes:'' },
+  { date:'2026-08-28', company:'Temporal',           role:'Developer Experience Engineer',         status:'Application Received',   notes:'' },
+  { date:'2026-08-28', company:'Neon Tech',          role:'Backend Developer – Postgres',          status:'Rejected',               notes:'Position filled internally' },
+  { date:'2026-08-27', company:'NordSecurity',       role:'DevOps Engineer (Saily)',               status:'Interview / Next Steps', notes:'Technical interview Sep 4' },
+  { date:'2026-08-26', company:'Rebuy Inc.',         role:'Sr Software Engineer – Backend',        status:'Application Received',   notes:'' },
+  { date:'2026-08-25', company:'Supabase',           role:'Backend Engineer – Realtime',           status:'Rejected',               notes:'' },
+  { date:'2026-08-25', company:'1Password',          role:'DevSecOps Engineer',                    status:'Application Received',   notes:'' },
+  { date:'2026-08-24', company:'PlanetScale',        role:'Cloud Security Engineer',               status:'Application Received',   notes:'' },
+  { date:'2026-08-23', company:'Fly.io',             role:'Infrastructure Engineer',               status:'Application Received',   notes:'' },
+  { date:'2026-08-22', company:'Stripe',             role:'Infrastructure Security Engineer',      status:'Offer',                  notes:'Offer received Sep 2 — reviewing' },
+  { date:'2026-08-21', company:'Wiz',                role:'Cloud Security Engineer',               status:'Interview / Next Steps', notes:'Final round Sep 6' },
+  { date:'2026-08-20', company:'Turso',              role:'Software Engineer – Distributed DB',    status:'Rejected',               notes:'' },
+  { date:'2026-08-19', company:'US Dept of Defense', role:'DevSecOps Engineer – GS-13',           status:'Incomplete / Started',   notes:'USAJobs form — finishing SF-86 section' },
+  { date:'2026-08-18', company:'Buf Technologies',   role:'Backend Engineer – API Platform',       status:'Rejected',               notes:'' },
+  { date:'2026-08-15', company:'Astro',              role:'Developer Advocate / Engineer',         status:'Rejected',               notes:'' },
+  { date:'2026-08-14', company:'Snowflake',          role:'Security Software Engineer',            status:'Rejected',               notes:'Rejection email Aug 17' },
+  { date:'2026-08-13', company:'MongoDB',            role:'Platform Engineer',                     status:'Application Received',   notes:'' },
+  { date:'2026-08-12', company:'Elastic',            role:'Site Reliability Engineer',             status:'Interview / Next Steps', notes:'Onsite scheduled Aug 28' },
+  { date:'2026-08-11', company:'Twilio',             role:'Security Engineer',                     status:'Rejected',               notes:'' },
+  { date:'2026-08-09', company:'Fastly',             role:'Infrastructure Engineer',               status:'Application Received',   notes:'' },
+  { date:'2026-08-08', company:'GitHub',             role:'DevSecOps Engineer',                    status:'Application Received',   notes:'' },
+  { date:'2026-08-07', company:'Netlify',            role:'Backend Engineer',                      status:'Rejected',               notes:'' },
+  { date:'2026-08-06', company:'Crowdstrike',        role:'Cloud Security Engineer',               status:'Interview / Next Steps', notes:'Recruiter screen complete' },
+  { date:'2026-08-05', company:'Palo Alto Networks', role:'Software Engineer – Security',          status:'Application Received',   notes:'' },
+  { date:'2026-08-04', company:'Lacework',           role:'Platform Engineer',                     status:'Rejected',               notes:'' },
+  { date:'2026-08-02', company:'Snyk',               role:'Backend Software Engineer',             status:'Application Received',   notes:'' },
+  { date:'2026-08-01', company:'Orca Security',      role:'Cloud Security Engineer',               status:'Rejected',               notes:'' },
+  { date:'2026-07-31', company:'Bridgecrew',         role:'DevSecOps Engineer',                    status:'Application Received',   notes:'' },
+  { date:'2026-07-30', company:'Aqua Security',      role:'Platform Security Engineer',            status:'Rejected',               notes:'' },
+  { date:'2026-07-29', company:'Sysdig',             role:'Cloud Security Engineer',               status:'Application Received',   notes:'' },
+  { date:'2026-07-28', company:'Lacework',           role:'Security Platform Engineer',            status:'Rejected',               notes:'Duplicate outreach — marked closed' },
+  { date:'2026-07-26', company:'JupiterOne',         role:'Cloud Security Engineer',               status:'Application Received',   notes:'' },
+  { date:'2026-07-25', company:'Accurics',           role:'DevSecOps Engineer',                    status:'Rejected',               notes:'' },
+  { date:'2026-07-23', company:'Tines',              role:'Security Automation Engineer',          status:'Application Received',   notes:'' },
 ];
 
 // ── Status config ────────────────────────────────────────────────────────────

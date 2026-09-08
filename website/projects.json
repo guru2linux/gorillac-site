@@ -1,6 +1,22 @@
 {
   "projects": [
     {
+      "title": "Detection Engineering & SIEM Insourcing — Google SecOps (Chronicle)",
+      "description": "Leading the migration of an enterprise detection estate from an outsourced MSSP to an in-house program on Google SecOps (Chronicle). Exported the full 400-rule production detection library into a version-controlled repository with complete YARA-L logic, pulled via API using keyless OAuth against my own identity — no service-account keys created. Authored and ported 200+ detection rules in house style, compile-verified against the live tenant, and validated the conversion pipeline against a known-good production rule before trusting it at scale. Built tooling that proves a rule actually fires rather than merely compiles, wrapping retrohunt submission and the alerts API — the check that exposed a systemic telemetry gap. Built an ingestion truth-table separating feeds that report healthy in the console from feeds that are genuinely flowing, and joined the results to the MITRE ATT&CK matrix to show where the coverage map overstated reality.",
+      "role": "Detection Engineer / Security Engineer — Enterprise SOC",
+      "tools": ["Google SecOps (Chronicle)", "YARA-L 2.0", "UDM", "Retrohunts", "MITRE ATT&CK", "SIEM Detection Engineering", "GCP", "Python", "Bash", "Git", "Cloud Monitoring", "Model Context Protocol (MCP)"],
+      "outcome": "Proved that a block of production detections had never fired despite reading enabled, alerting, and compiling clean — root-caused to Windows process-creation telemetry arriving at domain-controller scale rather than endpoint scale, and demonstrated end-to-end with a zero-detection 30-day retrohunt plus field-level UDM parser verification rather than asserted. Separately found live alerting rules joined against empty reference lists — logically unsatisfiable and physically incapable of producing a detection — and reseeded them from verified live inventory. Detection coverage is now measured against real data instead of console status.",
+      "link": ""
+    },
+    {
+      "title": "Cloud Posture Hardening & Security Platform Engineering",
+      "description": "Ongoing GCP and security-platform hardening for an enterprise environment, working toward a CIS-aligned baseline. Ran a posture sweep surfacing concrete exposures — over-broad administrative access, never-expiring service-account keys, owner privilege granted via group, and data-access logging disabled — each backed by a runnable command producing live evidence rather than a scanner assertion. Applied least-privilege trimming to a third-party integration's custom role, but only after tracing which permissions actually backed a live product feature: an earlier review had recommended a deeper cut that would have silently disabled log-source monitoring. Built a read-only MCP server exposing the verified evidence commands as typed tools running keyless off operator identity, so posture and ingestion checks run themselves. Also produced a pre-deployment validation kit for new ARM64 AI compute hardware — runbook, Terraform for an arm64 stand-in to prove agent compatibility before the hardware landed, and an Ansible hardening role covering SSH, auditd, firewall, sysctl, accounts, time sync, and updates.",
+      "role": "Cloud Security Engineer — Enterprise",
+      "tools": ["GCP", "IAM", "CIS Benchmarks", "Terraform", "Ansible", "SentinelOne", "auditd", "Cloud Audit Logs", "Python", "Model Context Protocol (MCP)", "Linux Hardening"],
+      "outcome": "Reduced the blast radius of a static, never-expiring vendor credential that could read the entire SIEM's telemetry, without interrupting the vendor's health reporting. Root-caused an apparent EDR licensing overage to a decommission-window misconfiguration that retained agents for ephemeral nodes long after they died — resolved as a policy change at zero cost rather than the seat purchase it was being scoped as, bringing the fleet back under its existing entitlement.",
+      "link": ""
+    },
+    {
       "title": "PopRunner — Full-Stack On-Demand Real Estate Service Marketplace",
       "description": "Architected and developed a dual-sided marketplace connecting real estate agents with service providers ('Runners'). The platform automates the logistics of property listing prep, including sign placement, lockbox installation, and photography. Engineered a complex job state machine with role-based views for Realtors (booking/management) and Runners (discovery/execution). Integrated Google Maps for proximity-based job discovery and Google Cloud Storage for authenticated 'proof of completion' photo uploads. Implemented Stripe Connect to manage the flow of funds, handling multi-party transactions and automated payouts to service providers while retaining platform fees.",
       "role": "Lead Architect & Full-Stack Engineer",
@@ -26,7 +42,7 @@
     },
     {
       "title": "Wazuh Home Lab SIEM — Full-Stack Security Monitoring & Detection Platform",
-      "description": "Deployed a production-grade SIEM/XDR platform on Ubuntu 22.04 using Wazuh v4.14.5, standing up the full Wazuh stack (Manager, Indexer, Dashboard) and enrolling multiple monitored endpoints including a Fedora Linux workstation. Configured File Integrity Monitoring (FIM) across critical system paths (/etc, /bin, /sbin, /boot), Security Configuration Assessment (SCA), vulnerability detection with hourly CVE feed updates, rootcheck for rootkit and trojan detection, and active response — automating firewall-drop blocks on SSH brute-force triggers (rule 5712, 30-minute ban). Built a custom Python Discord integration that parses Wazuh alert JSON and fires formatted real-time notifications (severity, source host, rule description) to a private security channel. Extended the ruleset with custom detection rules: a Level 12 canary file trap using Linux auditd to detect any unauthorized access to AWS credentials, and application-layer monitoring rules for a live trading agent's error and auth failure events. Integrated GCP Pub/Sub to ingest cloud logs from the gorillac-site GCP project directly into the SIEM pipeline.",
+      "description": "Deployed a production-grade SIEM/XDR platform on Ubuntu 22.04 using Wazuh v4.14.5, standing up the full Wazuh stack (Manager, Indexer, Dashboard) and enrolling multiple monitored endpoints including a Fedora Linux workstation. Configured File Integrity Monitoring (FIM) across critical system paths (/etc, /bin, /sbin, /boot), Security Configuration Assessment (SCA), vulnerability detection with hourly CVE feed updates, rootcheck for rootkit and trojan detection, and active response — automating firewall-drop blocks on SSH brute-force triggers (rule 5712, 30-minute ban). Built a custom Python Discord integration that parses Wazuh alert JSON and fires formatted real-time notifications (severity, source host, rule description) to a private security channel. Extended the ruleset with custom detection rules: a Level 12 canary file trap using Linux auditd to detect any unauthorized access to AWS credentials, and application-layer monitoring rules for a live trading agent's error and auth failure events. Integrated GCP Pub/Sub to ingest cloud audit logs directly into the SIEM pipeline, giving the lab a live cloud-telemetry source alongside its on-premise endpoints.",
       "role": "Security Engineer / Homelab Architect",
       "tools": ["Wazuh v4.14.5", "Ubuntu 22.04", "Wazuh Indexer", "Wazuh Dashboard", "Linux auditd", "FIM", "SCA", "Vulnerability Detection", "Active Response", "Rootcheck", "GCP Pub/Sub", "Discord Webhooks", "Python", "Filebeat", "Custom SIEM Rules"],
       "outcome": "Multi-endpoint SIEM with real-time Discord alerting, a canary-based AWS credential access trap, GCP cloud log ingestion, automated firewall active response, and custom application-layer detection rules — demonstrating end-to-end threat detection from rule authoring through real-time alert delivery.",
@@ -57,11 +73,11 @@
       "link": ""
     },
     {
-      "title": "Cloud-Hosted Portfolio Site — IaC on GCP (gorillac.net)",
-      "description": "Designed and deployed a production-grade personal portfolio site on GCP with all infrastructure defined as code in Terraform. Resources provisioned include: a GCS bucket with versioning and static website hosting, a Cloud CDN-backed backend bucket for edge caching, a globally reserved static IP, path-based URL map routing (serving static assets from GCS while routing /api/contact to a Cloud Run backend service), a Google-managed SSL certificate covering gorillac.net and www.gorillac.net, HTTPS and HTTP target proxies, and global forwarding rules on ports 80 and 443 with automatic HTTP-to-HTTPS redirect. All assets are uploaded and managed as Terraform resources with correct MIME types and IAM public read access. Bucket objects are served at clean extensionless URLs (/resume, /portfolio, /contact) via Content-Type-aware object naming.",
+      "title": "Self-Hosted Portfolio Site — Private Infrastructure & CI/CD (gorillac.net)",
+      "description": "Designed, built, and operate this site end to end. Originally deployed on GCP with all infrastructure defined as code in Terraform — a versioned GCS bucket behind a Cloud CDN backend bucket, a reserved global static IP, path-based URL map routing, a Google-managed SSL certificate covering the apex and www, and global forwarding rules with automatic HTTP-to-HTTPS redirect — then deliberately migrated off managed cloud onto self-hosted infrastructure to cut recurring spend and keep the stack under direct control. It now runs from a Proxmox host, served by nginx and exposed to the internet through a Cloudflare Tunnel with no inbound ports opened at the network edge. Deployment is automated: a push to main triggers a GitHub Actions workflow that runs on a self-hosted runner inside the network and rsyncs the site into place.",
       "role": "Sole Architect & Engineer",
-      "tools": ["Terraform", "GCP", "Cloud Storage", "Cloud CDN", "Cloud Load Balancing", "Managed SSL", "Cloud Run", "IAM", "Global Forwarding Rules"],
-      "outcome": "Fully reproducible, zero-click infrastructure — a single `terraform apply` provisions and wires the entire stack. Live at gorillac.net with sub-second global load times via CDN edge caching.",
+      "tools": ["Proxmox", "Cloudflare Tunnel", "nginx", "GitHub Actions", "Self-Hosted Runners", "Terraform", "GCP", "Cloud CDN", "Zero Trust Networking", "Linux", "systemd"],
+      "outcome": "Zero-trust ingress with no ports exposed at the perimeter, git-push-to-live deployment, and recurring hosting cost reduced to effectively nothing — while retaining the Terraform work that proved out the managed-cloud path.",
       "link": ""
     },
     {
@@ -120,7 +136,7 @@
     },
     {
       "category": "Security & Compliance",
-      "items": ["Penetration Testing", "OWASP", "RBAC / IAM", "HIPAA", "Vulnerability Management", "Rapid7 InsightVM", "SIEM"]
+      "items": ["Penetration Testing", "OWASP", "RBAC / IAM", "HIPAA", "Vulnerability Management", "Rapid7 InsightVM", "SIEM", "Google SecOps (Chronicle)", "YARA-L Detection Engineering", "MITRE ATT&CK", "CIS Benchmarks", "SentinelOne EDR", "Wazuh"]
     },
     {
       "category": "Application & Backend",
@@ -128,7 +144,7 @@
     },
     {
       "category": "AI & Automation",
-      "items": ["Claude API (Anthropic)", "XGBoost", "FinRL / PPO", "Prompt Engineering", "Playwright", "Browser Automation", "LLM-Driven Workflows"]
+      "items": ["Claude API (Anthropic)", "Model Context Protocol (MCP)", "XGBoost", "FinRL / PPO", "Prompt Engineering", "Playwright", "Browser Automation", "LLM-Driven Workflows"]
     },
     {
       "category": "Containers & Deployment",
