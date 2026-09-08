@@ -41,8 +41,13 @@ python3 -m http.server 8000
 Then navigate to `http://localhost:8000`.
 
 ## Deployment
-A push to `main` triggers `.github/workflows/deploy.yml`, which runs on the self-hosted runner on
-`qaserver` and rsyncs `website/` into `/opt/gorillac`. Only `website/` is deployed.
+A push to `main` triggers `.github/workflows/deploy.yml`. Per REM-003 the job runs on the isolated
+`ci-runner` CT — **not** on the production box — and reaches `qaserver` only through a forced-command
+SSH key (`ci_deploy_ed25519` → `ci-deploy.sh`), which streams a tarball of `website/` over the
+restricted `deploy-gorillac` channel. The runner has no other access to production.
+
+Only `website/` is shipped. `deploy/`, `assets-src/`, and `notes/` stay in the repo and are never
+served — keep it that way when adding files, since anything placed under `website/` becomes public.
 
 ### Origin nginx config
 `deploy/nginx-gorillac.conf` is **not** applied by the deploy workflow — it is a manual step on the
